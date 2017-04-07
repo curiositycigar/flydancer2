@@ -1,11 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-let Empty = {}
+// pages
+import Music from '../components/body/music/main.vue'
+import MusicHome from '../components/body/music/home/main.vue'
 
 Vue.use(Router)
 
-const route = {
+let Empty = {}
+
+// 音乐馆：主页，歌手，排行，分类
+// 个人中心
+// 社区
+// 单页：歌手，歌曲
+
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -14,12 +23,12 @@ const route = {
     {
       path: '/music',
       name: 'music',
-      component: Empty,
+      component: Music,
       children: [
         {
           path: 'home',
           name: 'musicHome',
-          component: Empty
+          component: MusicHome
         },
         {
           path: 'artists-list',
@@ -33,20 +42,33 @@ const route = {
         },
         {
           path: 'classify',
-          name: 'musicclassify',
+          name: 'musicClassify',
           component: Empty
         }
       ]
     },
     {
       path: '/home',
-      name: '',
+      name: 'home',
       component: Empty
     },
     {
       path: '/community',
-      name: '',
+      name: 'community',
+      component: Empty
+    },
+    {
+      path: '/singer',
+      name: 'singer',
+      component: Empty
+    },
+    {
+      path: '/song',
+      name: 'song',
       component: Empty
     }
-  ]
-}
+  ],
+  linkActiveClass: 'active'
+})
+
+export default router
