@@ -1,8 +1,11 @@
 /*
 create by YOU
 */
+
+
+
 <template>
-  <div class="home-box" :style="`background:${background}`">
+  <div class="home-box" :class="theme" :style="`background:${background}`">
     <div class="home-box-inner">
       <h1>
         <a href="javascript:;">
@@ -11,7 +14,8 @@ create by YOU
       </h1>
       <ul class="music-group">
         <li v-for="(item, index) in data.list">
-          <div class="s-bg" :style="`background:${backgroundInner} ${backgroundPosition[index]} / 400% 100% no-repeat`"></div>
+          <div class="s-bg"
+               :style="`background:${backgroundInner} ${backgroundPosition[index]} / 400% 100% no-repeat`"></div>
           <h2>
             <a href="javascript:;">
               <span class="des">{{ item.des }}</span>
@@ -58,6 +62,11 @@ create by YOU
       backgroundInner: {
         type: String,
         default: `url(${backgroundInner})`
+      },
+      theme: {
+        type: String,
+        default: 'light-light'
+        // light-dark dark-dark dark-light
       }
     }
   }
@@ -66,6 +75,10 @@ create by YOU
 <style lang="stylus" rel="stylesheet/stylus">
   home-box-height = 800px
   group-height = 600px
+  light = #ffffff
+  light-des = rgba(255, 255, 255, 0.5)
+  dark = #133131
+  dark-des = rgba(0, 0, 0, 0.5)
   .home-box
     width: 100%
     .home-box-inner
@@ -78,7 +91,7 @@ create by YOU
         padding: 50px 0 30px
         text-align: center
         a
-          color: #ffffff
+          color: light
           font-size: 40px
           font-weight: 100
       .music-group
@@ -112,12 +125,10 @@ create by YOU
             .des
               display: block
               font-size: 20px
-              color: #ffffff
               font-weight: 100
             .content
               display: block
               font-size: 30px
-              color: #ffffff
               font-weight: 100
           .play-button
             position: absolute
@@ -144,7 +155,6 @@ create by YOU
               height: 60px
               padding: 10px 50px
               div
-                color: #ffffff
                 font-weight: 400
               .s-id
                 display: inline-block
@@ -157,6 +167,38 @@ create by YOU
                 display: block
                 margin-left: 24px
                 font-size: 14px
-                color: rgba(255, 255, 255, 0.5)
+    &.light-light
+      h1 a
+        color: light
+      .music-group
+        a, div, span
+          color: light
+        div.s-singer
+          color: light-des
+    &.light-dark
+      h1 a
+        color: light
+      .music-group
+        a, div, span
+          color: dark
+        div.s-singer
+          color: dark-des
+    &.dark-dark
+      h1 a
+        color: dark
+      .music-group
+        a, div, span
+          color: dark
+        div.s-singer
+          color: dark-des
+    &.dark-light
+      h1 a
+        color: dark
+      .music-group
+        a, div, span
+          color: light
+        div.s-singer
+          color: light-des
+
 
 </style>

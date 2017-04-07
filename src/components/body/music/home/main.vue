@@ -2,15 +2,10 @@
 create by YOU
 */
 
-
-
-
-
-
-
 <template>
   <div>
-    <fd-home-box :data="homeBox"></fd-home-box>
+    <fd-home-box :data="homeBox" background="#fefefe" theme="dark-light"></fd-home-box>
+    <fd-home-box :data="homeBox" theme="light-dark"></fd-home-box>
   </div>
 </template>
 
