@@ -15,14 +15,11 @@
   export default {
     data () {
       return {
-        data: {
-          name: '你是我的眼',
-          singer: '林宥嘉',
-          des: '播放量:15.6万',
-          src: '',
-          href: 'javascript:;',
-          singerHref: 'javascript:;'
-        }
+      }
+    },
+    props: {
+      data: {
+        type: Object
       }
     }
   }

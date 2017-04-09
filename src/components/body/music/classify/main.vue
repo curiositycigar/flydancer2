@@ -2,23 +2,7 @@
   <div class="classify">
     <fd-tags-group :data="tags" @change-active="changeActive"></fd-tags-group>
     <div class="classify-section">
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
-      <fd-classify-item></fd-classify-item>
+      <fd-classify-item v-for="(item, index) in data" :data="item" :key="index"></fd-classify-item>
     </div>
   </div>
 </template>
@@ -35,6 +19,40 @@
           ['全部', 'ACG', '经典', '网络歌曲', '影视', 'KTV', '儿歌', '古风'],
           ['全部', '伤感', '安静', '快乐', '治愈', '甜蜜', '寂寞', '宣泄', '思念'],
           ['全部', '睡前', '夜店', '学习', '运动', '开车', '约会', '工作', '旅行', '派对', '婚礼', '咖啡馆']
+        ],
+        data: [
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: '',
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: '',
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: '',
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: '',
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          }
         ]
       }
     },
@@ -45,6 +63,15 @@
     methods: {
       changeActive (message) {
         console.log(message)
+        this.data.push(
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: '',
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          })
       }
     }
   }
@@ -55,5 +82,5 @@
     width: 1200px
     margin: 0 auto
     .fd-classify-item
-      float:left
+      float: left
 </style>

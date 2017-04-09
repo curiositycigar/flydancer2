@@ -3,18 +3,7 @@
     <fd-home-box-2 :data="homeBox2" background="#ffdfdf" theme="dark-light"></fd-home-box-2>
     <fd-tags-group :data="tags" @change-active="changeActive"></fd-tags-group>
     <div class="artist-list-singers">
-      <fd-singer-item></fd-singer-item>
-      <fd-singer-item></fd-singer-item>
-      <fd-singer-item></fd-singer-item>
-      <fd-singer-item></fd-singer-item>
-      <fd-singer-item></fd-singer-item>
-      <fd-singer-item></fd-singer-item>
-      <fd-singer-item></fd-singer-item>
-      <fd-singer-item></fd-singer-item>
-      <fd-singer-item></fd-singer-item>
-      <fd-singer-item></fd-singer-item>
-      <fd-singer-item></fd-singer-item>
-      <fd-singer-item></fd-singer-item>
+      <fd-singer-item v-for="(item,index) in data" :data="item" :key="index"></fd-singer-item>
     </div>
   </div>
 </template>
@@ -59,7 +48,25 @@
               href: 'javascript:;'
             }
           ]
-        }
+        },
+        data: [
+          {
+            name: '许嵩',
+            href: 'javascript:;'
+          },
+          {
+            name: '许嵩',
+            href: 'javascript:;'
+          },
+          {
+            name: '许嵩',
+            href: 'javascript:;'
+          },
+          {
+            name: '许嵩',
+            href: 'javascript:;'
+          }
+        ]
       }
     },
     components: {

@@ -15,16 +15,12 @@
   export default {
     data () {
       return {
-        data: {
-          name: '许嵩',
-          href: 'javascript:;'
-        }
       }
     },
     props: {
-//      data: {
-//        type: 'Array'
-//      }
+      data: {
+        type: Object
+      }
     }
   }
 </script>
