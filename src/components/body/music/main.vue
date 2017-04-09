@@ -21,4 +21,6 @@ create by YOU
 <style lang="stylus" rel="stylesheet/stylus">
   .music
     width: 100%
+    >div
+      transition: all 0.3s
 </style>

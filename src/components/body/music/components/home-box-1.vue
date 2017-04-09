@@ -1,12 +1,23 @@
 /*
 create by YOU
+
+*song-box
+>title
+>>*item
+>>>bg
+>>>title
+>>>button
+>>>song-list
+>>>>a
+>>>>>id
+>>>>>name
+>>>>>singer
+
 */
 
-
-
 <template>
-  <div class="home-box" :class="theme" :style="`background:${background}`">
-    <div class="home-box-inner">
+  <div class="home-box-1" :class="theme" :style="`background:${background}`">
+    <div class="home-box-1-inner">
       <h1>
         <a href="javascript:;">
           {{ data.title }}
@@ -79,9 +90,9 @@ create by YOU
   light-des = rgba(255, 255, 255, 0.5)
   dark = #133131
   dark-des = rgba(0, 0, 0, 0.5)
-  .home-box
+  .home-box-1
     width: 100%
-    .home-box-inner
+    .home-box-1-inner
       margin: 0 auto
       width: 1200px
       height: home-box-height

@@ -1,23 +1,34 @@
-/*
-create by YOU
-*/
-
 <template>
-  <div>
-    <fd-home-box-1 :data="homeBox1" theme="light-light"></fd-home-box-1>
-    <fd-home-box-2 :data="homeBox2" background="#fefefe" theme="dark-light"></fd-home-box-2>
+  <div class="top-list">
+    <fd-home-box-1 :data="homeBox" theme="light-light"></fd-home-box-1>
+    <div class="top-list-wrapper">
+      <div class="top-list-nav-wrapper">
+        <fd-top-list-nav @change-active="handlerChange"></fd-top-list-nav>
+      </div>
+      <div class="top-list-section-wrapper">
+        <fd-top-list-section></fd-top-list-section>
+        <fd-load-more></fd-load-more>
+      </div>
+    </div>
   </div>
 </template>
 
 <script type="text/babel">
-  import singerImage from '../components/image/singer'
+  import TopListNav from './top-list-nav.vue'
+  import TopListSection from './top-list-section.vue'
   import HomeBox1 from '../components/home-box-1.vue'
-  import HomeBox2 from '../components/home-box-2.vue'
+  import LoadMore from '../components/load-more.vue'
   export default {
+    components: {
+      'fd-home-box-1': HomeBox1,
+      'fd-top-list-nav': TopListNav,
+      'fd-top-list-section': TopListSection,
+      'fd-load-more': LoadMore
+    },
     data () {
       return {
-        homeBox1: {
-          title: '排行榜',
+        homeBox: {
+          title: '推荐榜单',
           list: [
             {
               title: '流行指数',
@@ -122,47 +133,29 @@ create by YOU
                   singer: '汪洋'
                 }
               ]
-            }
-          ]
-        },
-        homeBox2: {
-          title: '排行榜',
-          list: [
-            {
-              name: 'Jack Zhou',
-              des: '歌曲数:188',
-              src: singerImage[0],
-              href: 'javascript:;'
-            },
-            {
-              name: 'Jack Zhou',
-              des: '歌曲数:188',
-              src: singerImage[1],
-              href: 'javascript:;'
-            },
-            {
-              name: 'Jack Zhou',
-              des: '歌曲数:188',
-              src: singerImage[2],
-              href: 'javascript:;'
-            },
-            {
-              name: 'Jack Zhou',
-              des: '歌曲数:188',
-              src: singerImage[3],
-              href: 'javascript:;'
             }
           ]
         }
       }
     },
-    components: {
-      'fd-home-box-1': HomeBox1,
-      'fd-home-box-2': HomeBox2
+    methods: {
+      handlerChange (query) {
+        console.log(query)
+      }
     }
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-
+  .top-list
+    .top-list-wrapper
+      width: 1200px
+      margin: 30px auto 0
+      overflow: hidden
+      .top-list-nav-wrapper
+        float: left
+        width: 200px
+      .top-list-section-wrapper
+        margin-left: 200px
+        width: 1000px
 </style>

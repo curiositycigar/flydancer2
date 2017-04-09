@@ -33,9 +33,8 @@ create by YOU
   .sub-nav
     width: 1200px
     margin: 0 auto
-    text-align: center
     ul
-      margin: 0 auto
+      margin-left: 200px
       padding: 0
       li
         list-style: none

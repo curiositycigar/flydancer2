@@ -5,6 +5,8 @@ import Router from 'vue-router'
 import router from './router'
 import App from './App'
 
+import './stylus/base.styl'
+
 Vue.use(Router)
 Vue.config.productionTip = false
 

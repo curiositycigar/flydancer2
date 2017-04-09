@@ -4,6 +4,9 @@ import Router from 'vue-router'
 // pages
 import Music from '../components/body/music/main.vue'
 import MusicHome from '../components/body/music/home/main.vue'
+import MusicArtistsList from '../components/body/music/artist-list/mian.vue'
+import MusicTopList from '../components/body/music/top-list/main.vue'
+import MusicClassify from '../components/body/music/classify/main.vue'
 
 Vue.use(Router)
 
@@ -18,13 +21,21 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'index'
+      name: 'index',
+      beforeEnter (to, from, next) {
+        return next('/music')
+      }
     },
     {
       path: '/music',
-      name: 'music',
       component: Music,
       children: [
+        {
+          path: '',
+          beforeEnter (to, from, next) {
+            return next('/music/home')
+          }
+        },
         {
           path: 'home',
           name: 'musicHome',
@@ -33,17 +44,17 @@ const router = new Router({
         {
           path: 'artists-list',
           name: 'musicArtistsList',
-          component: Empty
+          component: MusicArtistsList
         },
         {
           path: 'top-list',
           name: 'musicTopList',
-          component: Empty
+          component: MusicTopList
         },
         {
           path: 'classify',
           name: 'musicClassify',
-          component: Empty
+          component: MusicClassify
         }
       ]
     },
