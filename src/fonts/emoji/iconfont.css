@@ -1,0 +1,77 @@
+
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1493107085994'); /* IE9*/
+  src: url('iconfont.eot?t=1493107085994#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1493107085994') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1493107085994') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1493107085994#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-angel:before { content: "\e670"; }
+
+.icon-celebrity:before { content: "\e671"; }
+
+.icon-amazed:before { content: "\e672"; }
+
+.icon-alien:before { content: "\e673"; }
+
+.icon-angry:before { content: "\e674"; }
+
+.icon-capitalist:before { content: "\e675"; }
+
+.icon-confused:before { content: "\e676"; }
+
+.icon-cool:before { content: "\e677"; }
+
+.icon-happy:before { content: "\e678"; }
+
+.icon-drunk:before { content: "\e679"; }
+
+.icon-devil:before { content: "\e67a"; }
+
+.icon-crying:before { content: "\e67b"; }
+
+.icon-joking:before { content: "\e67c"; }
+
+.icon-in-love:before { content: "\e67d"; }
+
+.icon-kiss-1:before { content: "\e67e"; }
+
+.icon-ninja:before { content: "\e67f"; }
+
+.icon-kiss-2:before { content: "\e680"; }
+
+.icon-monster:before { content: "\e681"; }
+
+.icon-nerd:before { content: "\e682"; }
+
+.icon-puzzled:before { content: "\e683"; }
+
+.icon-pirate:before { content: "\e684"; }
+
+.icon-sad:before { content: "\e685"; }
+
+.icon-shy:before { content: "\e686"; }
+
+.icon-rofl:before { content: "\e687"; }
+
+.icon-speechless-1:before { content: "\e688"; }
+
+.icon-sleeping:before { content: "\e689"; }
+
+.icon-speechless-2:before { content: "\e68a"; }
+
+.icon-wink:before { content: "\e68b"; }
+
+.icon-yawn:before { content: "\e68c"; }
+
+.icon-vampire:before { content: "\e68d"; }
+

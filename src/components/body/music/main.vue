@@ -2,7 +2,6 @@
 create by YOU
 */
 
-
 <template>
   <div class="music">
     <fd-sub-nav></fd-sub-nav>
