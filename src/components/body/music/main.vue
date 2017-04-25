@@ -2,10 +2,13 @@
 create by YOU
 */
 
+
 <template>
   <div class="music">
     <fd-sub-nav></fd-sub-nav>
-    <router-view></router-view>
+    <transition name="sub-page">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -21,6 +24,18 @@ create by YOU
 <style lang="stylus" rel="stylesheet/stylus">
   .music
     width: 100%
-    >div
+    > div
       transition: all 0.3s
+
+  .sub-page-enter
+    transition: opacity transform .3s
+
+  .sub-page-enter-active
+    opacity: 0.4
+
+  .sub-page-leave
+    transition: opacity transform .3s
+
+  .sub-page-leave-active
+    opacity: 0.4
 </style>
