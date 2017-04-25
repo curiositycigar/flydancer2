@@ -4,12 +4,14 @@ create by YOU
 
 <template>
   <div>
-    <fd-home-box-1 :data="homeBox1" theme="light-light"></fd-home-box-1>
-    <fd-home-box-2 :data="homeBox2" background="#fefefe" theme="dark-light"></fd-home-box-2>
+    <fd-home-box-2 :data="homeBox2" :background="`url(${BoxBg})`" theme="light-light"></fd-home-box-2>
+    <fd-home-box-1 :data="homeBox1" background="#fefefe" theme="dark-light"></fd-home-box-1>
+    <fd-home-box-2 :data="homeBox3" theme="light-light"></fd-home-box-2>
   </div>
 </template>
 
 <script type="text/babel">
+  import BoxBg from '../components/image/box-bg.jpg'
   import singerImage from '../components/image/singer'
   import HomeBox1 from '../components/home-box-1.vue'
   import HomeBox2 from '../components/home-box-2.vue'
@@ -17,7 +19,7 @@ create by YOU
     data () {
       return {
         homeBox1: {
-          title: '排行榜',
+          title: '歌曲排行榜',
           list: [
             {
               title: '流行指数',
@@ -126,34 +128,64 @@ create by YOU
           ]
         },
         homeBox2: {
-          title: '排行榜',
+          title: '歌手排行榜',
           list: [
             {
-              name: 'Jack Zhou',
-              des: '歌曲数:188',
+              name: '薛之谦',
+              des: '歌曲数:119',
               src: singerImage[0],
               href: 'javascript:;'
             },
             {
-              name: 'Jack Zhou',
-              des: '歌曲数:188',
+              name: '周杰伦',
+              des: '歌曲数:341',
               src: singerImage[1],
               href: 'javascript:;'
             },
             {
-              name: 'Jack Zhou',
-              des: '歌曲数:188',
+              name: '陈奕迅',
+              des: '歌曲数:819',
               src: singerImage[2],
               href: 'javascript:;'
             },
             {
-              name: 'Jack Zhou',
-              des: '歌曲数:188',
+              name: '林俊杰',
+              des: '歌曲数:301',
               src: singerImage[3],
               href: 'javascript:;'
             }
           ]
-        }
+        },
+        homeBox3: {
+          title: '歌手推荐',
+          list: [
+            {
+              name: '薛之谦',
+              des: '歌曲数:119',
+              src: singerImage[0],
+              href: 'javascript:;'
+            },
+            {
+              name: '周杰伦',
+              des: '歌曲数:341',
+              src: singerImage[1],
+              href: 'javascript:;'
+            },
+            {
+              name: '陈奕迅',
+              des: '歌曲数:819',
+              src: singerImage[2],
+              href: 'javascript:;'
+            },
+            {
+              name: '林俊杰',
+              des: '歌曲数:301',
+              src: singerImage[3],
+              href: 'javascript:;'
+            }
+          ]
+        },
+        BoxBg: BoxBg
       }
     },
     components: {

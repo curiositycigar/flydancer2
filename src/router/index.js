@@ -7,6 +7,7 @@ import MusicHome from '../components/body/music/home/main.vue'
 import MusicArtistsList from '../components/body/music/artist-list/mian.vue'
 import MusicTopList from '../components/body/music/top-list/main.vue'
 import MusicClassify from '../components/body/music/classify/main.vue'
+import Home from '../components/body/home/main.vue'
 
 Vue.use(Router)
 
@@ -61,7 +62,7 @@ const router = new Router({
     {
       path: '/home',
       name: 'home',
-      component: Empty
+      component: Home
     },
     {
       path: '/community',

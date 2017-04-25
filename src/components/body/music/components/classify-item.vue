@@ -2,7 +2,7 @@
   <div class="fd-classify-item">
     <div class="img-box">
       <a :href="data.href">
-        <img src="../components/image/2.jpg" alt="songImage">
+        <img :src="data.src" alt="songImage">
       </a>
     </div>
     <h3><a :href="data.href">{{ data.name }}</a></h3>

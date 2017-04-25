@@ -19,55 +19,25 @@
       <div class="song-item-duration">{{ item.duration }}</div>
       <div class="song-time-from">{{ item.from }}</div>
     </div>
+    `
+
   </div>
 </template>
 
 <script type="text/babel">
   export default {
     data () {
-      return {
-        title: {
-          index: '排行',
-          title: '歌曲',
-          des: '歌手',
-          duration: '时长',
-          from: '来源'
-        },
-        data: [
-          {
-            index: 1,
-            name: '好久不见',
-            des: '陈奕迅',
-            duration: '05:12',
-            src: '',
-            href: 'javascript:;',
-            dHref: 'javascript:;',
-            from: '网易云音乐'
-          },
-          {
-            index: 2,
-            name: '好久不见',
-            des: '陈奕迅',
-            duration: '05:12',
-            src: '',
-            href: 'javascript:;',
-            dHref: 'javascript:;',
-            from: '网易云音乐'
-          },
-          {
-            index: 3,
-            name: '好久不见',
-            des: '陈奕迅',
-            duration: '05:12',
-            src: '',
-            href: 'javascript:;',
-            dHref: 'javascript:;',
-            from: '网易云音乐'
-          }
-        ]
-      }
+      return {}
     },
-    methods: {}
+    methods: {},
+    props: {
+      data: {
+        type: Array
+      },
+      title: {
+        type: Object
+      }
+    }
   }
 </script>
 

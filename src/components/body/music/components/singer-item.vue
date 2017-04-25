@@ -2,7 +2,7 @@
   <div class="singer-item-wrapper">
     <div class="singer-item">
       <a :href="data.href">
-        <img src="./image/1.jpg" alt="">
+        <img :src="data.src" alt="">
       </a>
       <h4 class="singer-name">
         <a :href="data.href">{{ data.name }}</a>

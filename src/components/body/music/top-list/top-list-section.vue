@@ -8,7 +8,7 @@
       <a href="javascript:;">批量操作</a>
     </div>
     <div>
-      <fd-song-table></fd-song-table>
+      <fd-song-table :data="data" :title="title"></fd-song-table>
     </div>
   </div>
 </template>
@@ -16,8 +16,19 @@
 <script type="text/babel">
   import SongItem from '../components/song-table.vue'
   export default {
+    data () {
+      return {}
+    },
     components: {
       'fd-song-table': SongItem
+    },
+    props: {
+      data: {
+        type: Array
+      },
+      title: {
+        type: Object
+      }
     }
   }
 </script>

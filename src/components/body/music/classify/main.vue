@@ -8,6 +8,7 @@
 </template>
 
 <script type="text/babel">
+  import singerImg from '../components/image/singer'
   import TagsGroup from '../components/tags-group.vue'
   import ClassifyItem from '../components/classify-item.vue'
   export default {
@@ -25,7 +26,7 @@
             name: '你是我的眼',
             singer: '林宥嘉',
             des: '播放量:15.6万',
-            src: '',
+            src: singerImg[0],
             href: 'javascript:;',
             singerHref: 'javascript:;'
           },
@@ -33,7 +34,7 @@
             name: '你是我的眼',
             singer: '林宥嘉',
             des: '播放量:15.6万',
-            src: '',
+            src: singerImg[1],
             href: 'javascript:;',
             singerHref: 'javascript:;'
           },
@@ -41,7 +42,7 @@
             name: '你是我的眼',
             singer: '林宥嘉',
             des: '播放量:15.6万',
-            src: '',
+            src: singerImg[2],
             href: 'javascript:;',
             singerHref: 'javascript:;'
           },
@@ -49,7 +50,95 @@
             name: '你是我的眼',
             singer: '林宥嘉',
             des: '播放量:15.6万',
-            src: '',
+            src: singerImg[1],
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: singerImg[0],
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: singerImg[2],
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: singerImg[3],
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: singerImg[1],
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: singerImg[2],
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: singerImg[1],
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: singerImg[0],
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: singerImg[2],
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: singerImg[3],
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: singerImg[0],
+            href: 'javascript:;',
+            singerHref: 'javascript:;'
+          },
+          {
+            name: '你是我的眼',
+            singer: '林宥嘉',
+            des: '播放量:15.6万',
+            src: singerImg[3],
             href: 'javascript:;',
             singerHref: 'javascript:;'
           }
