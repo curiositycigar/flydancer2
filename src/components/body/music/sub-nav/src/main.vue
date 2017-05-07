@@ -27,30 +27,46 @@ create by YOU
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  sub-color = #133131
-  sub-color-active = #ff9494
+  sub-color = #ffffff
+  sub-color-active = #ffffff
   sub-color-bg = #ffffff
   .sub-nav
-    width: 1200px
+    width: 100%
     margin: 0 auto
+    background: linear-gradient(180deg, #c70c0c 20%, #980808 80%)
     ul
-      margin-left: 200px
-      padding: 0
+      width: 1200px
+      margin: 0 auto
+      padding: 0 0 0 200px
+      border-style: solid
+      border-color: #ea1717 #000000 #000000 #030303
+      border-width: 1px 0
       li
         list-style: none
         margin: 0
-        padding: 15px 20px
+        padding: 5px 10px
         display: inline-block
         vertical-align: top
         height: header-height
         line-height: header-height
         a
+          display: inline-block
+          height: 22px
+          line-height: 22px
+          padding: 0 15px
+          border-style: solid
+          border-width: 1px
+          border-color: transparent
+          border-radius: 100px
           color: sub-color
-          font-size: 16px
+          font-size: 12px
           text-decoration: none
-          transition: all 0.3s
           &:hover
+            border-color: #b80a0a
+            background: linear-gradient(180deg, #640000, #8e0403)
             color: sub-color-active
           &.active
+            border-color: #b80a0a
+            background: linear-gradient(180deg, #640000, #8e0403)
             color: sub-color-active
 </style>

@@ -4,22 +4,126 @@ create by YOU
 
 <template>
   <div class="login">
-    <a href="javascript:;">登录</a>
+    <a href="javascript:;" @click="toggleLogin">登录</a>
+    <div class="login-background" v-show="showLogin">
+      <div class="login-wrapper">
+        <div class="login-tabs">
+          <div :class="loginFields ? 'active' : ''" @click="showLoginFields">登錄</div>
+          <div :class="loginFields ? '' : 'active'" @click="showRegisterFields">註冊</div>
+        </div>
+        <div class="login-fields" v-show="loginFields">
+          <el-form ref="login" label-position="left" :model="login" label-width="80px">
+            <el-form-item label="用户名:">
+              <el-input v-model="login.username"></el-input>
+            </el-form-item>
+            <el-form-item label="密码:">
+              <el-input v-model="login.password"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmitLogin">立即创建</el-button>
+              <el-button @click="toggleLogin">取消</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div class="register-fields" v-show="!loginFields">
+          <el-form ref="login" label-position="left" :model="login" label-width="80px">
+            <el-form-item label="用户名:">
+              <el-input v-model="login.username"></el-input>
+            </el-form-item>
+            <el-form-item label="密码:">
+              <el-input v-model="login.password1"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码:">
+              <el-input v-model="login.password2"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmitLogin">立即创建</el-button>
+              <el-button @click="toggleLogin">取消</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script type="text/babel">
-    export default {}
+  export default {
+    name: 'fdLogin',
+    data () {
+      return {
+        username: '',
+        password: '',
+        showLogin: false,
+        loginFields: true,
+        login: {
+          username: '',
+          password: ''
+        }
+      }
+    },
+    methods: {
+      toggleLogin () {
+        this.showLogin = !this.showLogin
+      },
+      showLoginFields () {
+        this.loginFields = true
+      },
+      showRegisterFields () {
+        this.loginFields = false
+      },
+      onSubmitLogin () {
+      },
+      onSubmitRegister () {
+      }
+    }
+  }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
   .login
+    display: flex
+    justify-content: center
+    align-items: center
     width: 100%
     height: 100%
-    line-height:70px
+    line-height: 100%
     text-align: center
     a
-      color: #133131
+      color: #cccccc
       &:hover
-        color: #ff9494
+        color: #ffffff
+    .login-background
+      position: fixed
+      left: 0
+      top: 0
+      width: 100%
+      height: 100%
+      background: rgba(0, 0, 0, 0.5)
+      z-index: 9999
+      .login-wrapper
+        position: absolute
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%)
+        width: 400px
+        background: #ffffff
+        .login-tabs
+          display: flex
+          width: 100%
+          > div
+            box-sizing: border-box
+            width: 50%
+            height: 50px
+            line-height: 50px
+            border-bottom: solid 1px #e7e1cd
+            cursor: pointer
+            background: rgb(255, 255, 255)
+            transition: all 0.1s
+            &.active
+              color: #55a532
+              border-bottom: solid 1px #55a532
+        .login-fields, .register-fields
+          box-sizing: border-box
+          padding: 50px
 </style>

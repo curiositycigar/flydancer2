@@ -10,12 +10,14 @@
     <div v-for="item in data" class="song-item">
       <div class="song-item-index">{{ item.index }}</div>
       <div class="song-item-title">
-        <a :href="item.href">
+        <router-link :to="pre + item.id">
           <img :src="item.src" alt="img">
           <div class="song-item-name">{{ item.name }}</div>
-        </a>
+        </router-link>
       </div>
-      <div class="song-item-des"><a :href="item.dHref">{{ item.des }}</a></div>
+      <div class="song-item-des">
+        <router-link :to="singerPre + item.singerId">{{ item.des }}</router-link>
+      </div>
       <div class="song-item-duration">{{ item.duration }}</div>
       <div class="song-time-from">{{ item.from }}</div>
     </div>
@@ -26,8 +28,12 @@
 
 <script type="text/babel">
   export default {
+    name: 'fdSongTable',
     data () {
-      return {}
+      return {
+        pre: '/music/song/',
+        singerPre: '/music/artist/'
+      }
     },
     methods: {},
     props: {

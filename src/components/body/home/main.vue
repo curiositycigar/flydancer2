@@ -2,228 +2,135 @@
 create by YOU
 */
 <template>
-  <div class="wrapper">
-    <div class="body">
-      <div class="head">
-        <div class="eyes">
-          <div class="left-eye"></div>
-          <div class="right-eye"></div>
+  <div class="home">
+    <div class="redBar"></div>
+    <div v-if="userid" class="header">
+      <div class="avatar">
+        <img src="./bg_user.jpg" alt="">
+      </div>
+      <div class="nickname">
+        Nick Name
+      </div>
+      <div class="faf">
+        <div>
+          <span>2</span>
+          <span>关注</span>
         </div>
-        <div class="ear"></div>
+        <div>
+          <span>0</span>
+          <span>粉丝</span>
+        </div>
       </div>
-      <div class="leg leg-1">
-        <div class="foot"></div>
-      </div>
-      <div class="leg leg-2">
-        <div class="foot"></div>
-      </div>
-      <div class="leg leg-3">
-        <div class="foot"></div>
-      </div>
-      <div class="leg leg-4">
-        <div class="foot"></div>
-      </div>
-      <div class="tail"></div>
     </div>
-    <div class="line"></div>
+    <div v-if="userid" class="home-contents">
+      <ul class="home-nav">
+        <li v-for="(item, index) in nav">
+          <router-link :to="item.to">{{ item.name }}</router-link>
+        </li>
+      </ul>
+      <div class="home-content-wrapper">
+        <router-view></router-view>
+      </div>
+    </div>
+    <div v-if="!userid">
+      你需要登录
+    </div>
   </div>
 </template>
 
 <script type="text/babel">
+  import store from '@/store'
+  import {mapState} from 'vuex'
   export default {
-    beforeRouteEnter (to, from, next) {
-      console.log(from)
-      if (confirm('next?')) {
-        next()
-      } else {
-        next(false)
+    name: 'Home',
+    data () {
+      return {
+        active: 1,
+        nav: [
+          {name: '歌单', to: '/home/list'},
+          {name: '关注', to: '/home/follow'},
+          {name: '收藏', to: '/home/love'},
+          {name: '粉丝', to: '/home/fans'},
+          {name: '上传的歌曲', to: '/home/upload'},
+          {name: '个人设置', to: '/home/me'}
+        ]
       }
-    }
+    },
+    store,
+    computed: {
+      ...mapState([
+        'userid',
+        'username',
+        'nickname'
+      ])
+    },
+    methods: {}
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
-  time = 2s 1.5s
-  @keyframes body
-    0%
-      transform: translate(0, 5px)
-    25%
-      transform: translate(0, 0)
-    50%
-      transform: translate(0, 5px)
-    75%
-      transform: translate(0, 0)
-    100%
-      transform: translate(0, 5px)
+<style lang="stylus" rel="stylesheet/stylus" scoped>
+  ul, li
+    margin: 0
+    padding: 0
+    list-style: none
 
-  @keyframes leg-first
-    0%
-      transform: rotate(-20deg) translate(10px, -10px) scale(1, 0.9)
-    25%
-      transform: rotate(0deg) translate(0, 0) scale(1, 1)
-    50%
-      transform: rotate(20deg) translate(-10px, -3px) scale(1, 1.1)
-    75%
-      transform: rotate(0deg) translate(0, -16px) scale(1, 0.95)
-    100%
-      transform: rotate(-20deg) translate(10px, -10px) scale(1, 0.9)
-
-  @keyframes leg-after
-    0%
-      transform: rotate(20deg) translate(-10px, -3px) scale(1, 1.1)
-    25%
-      transform: rotate(0deg) translate(0, -16px) scale(1, 0.95)
-    50%
-      transform: rotate(-20deg) translate(10px, -10px) scale(1, 0.9)
-    75%
-      transform: rotate(0deg) translate(0, 0) scale(1, 1)
-    100%
-      transform: rotate(20deg) translate(-10px, -3px) scale(1, 1.1)
-
-  @keyframes foot-first
-    0%
-      transform: rotate(20deg) scale(1, 1.1)
-    25%
-      transform: rotate(0deg) scale(1, 0.9)
-    50%
-      transform: rotate(-20deg) scale(1, 0.9)
-    75%
-      transform: rotate(0deg) scale(1, 1.1)
-    100%
-      transform: rotate(20deg) scale(1, 1.1)
-
-  @keyframes foot-after
-    0%
-      transform: rotate(-20deg) scale(1, 0.9)
-    25%
-      transform: rotate(0deg) scale(1, 1.1)
-    50%
-      transform: rotate(20deg) scale(1, 1.1)
-    75%
-      transform: rotate(0deg) scale(1, 0.9)
-    100%
-      transform: rotate(-20deg) scale(1, 0.9)
-
-  .wrapper
-    psoition: relative
-    width: 600px
-    height: 600px
-    .body
-      position: absolute
-      left: 200px
-      top: 300px
-      width: 200px
-      height: 100px
-      border: solid 1px #ff9494
-      border-radius: 80px 50px 50px 50px
-      background: #ffefef
-      animation: body time infinite
-      &:after
-        content: ''
-        position: absolute
-        left: -1px
-        top: -1px
-        width: 200px
-        height: 100px
-        border: solid 1px #ff9494
-        border-radius: 80px 50px 50px 50px
-        background: #ffefef
-        z-index: 0
-      .head
-        position: absolute
-        right: -40px
-        top: -20px
-        width: 80px
-        height: 50px
-        border: solid 1px #ff9494
-        border-radius: 40px 80px 10px 50px
-        background: #ffefef
+  .home
+    .header
+      box-sizing: border-box
+      display: flex
+      flex-direction: column
+      align-items: center
+      width: 100%
+      height: 400px
+      padding-top: 100px
+      background: url(./bg_user.jpg)
+      z-index:-1
+      .avatar
+        box-sizing: border-box
+        height: 120px
+        width: 120px
+        border: solid 5px #ffffff
+        border-radius: 60px
         overflow: hidden
-        z-index: 100
-        .eyes
-          position: absolute
-          right: -6px
-          top: 10px
-          width: 46px
-          height: 20px
-          border-radius: 20px
-          background: #dfdfdf
-          .left-eye
-            position: absolute
-            right: 8px
-            top: 2px
-            width: 14px
-            height: 14px
-            border-radius: 7px
-            background: #133131
-          .right-eye
-            position: absolute
-            left: 8px
-            top: 2px
-            width: 14px
-            height: 14px
-            border-radius: 7px
-            background: #133131
-      .leg
-        border-style: solid
-        border-width: 0 1px 1px 1px
-        border-color: #ff9494
-        .foot
-          position: absolute
-          left: -5px
-          bottom: -20px
-          width: 40px
-          height: 30px
-          border: solid 1px #ff9494
-          border-radius: 40px 60px 20px 20px
-          background: #ffefef
-      .leg-1
-        position: absolute
-        left: 10px
-        top: 80px
-        width: 30px
-        height: 70px
-        border-radius: 80px 50px 20px 20px
-        background: #ffefef
-        z-index: 100
-        animation: leg-after time infinite
-        .foot
-          animation: foot-after time infinite
-      .leg-2
-        position: absolute
-        left: 20px
-        top: 70px
-        width: 30px
-        height: 70px
-        border-radius: 80px 50px 20px 20px
-        background: #ffefef
-        z-index: -100
-        animation: leg-first time infinite
-        .foot
-          animation: foot-first time infinite
-      .leg-3
-        position: absolute
-        right: 10px
-        top: 80px
-        width: 30px
-        height: 70px
-        border-radius: 80px 50px 20px 20px
-        background: #ffefef
-        z-index: 100
-        animation: leg-first time infinite
-        .foot
-          animation: foot-first time infinite
-      .leg-4
-        position: absolute
-        right: 20px
-        top: 70px
-        width: 30px
-        height: 70px
-        border-radius: 80px 50px 20px 20px
-        background: #ffefef
-        z-index: -100
-        animation: leg-after time infinite
-        .foot
-          animation: foot-after time infinite
-
+        img
+          width: 100%
+          height: 100%
+      > div
+        color: #ffffff
+      .nickname
+        height: 50px
+        line-height: 50px
+        margin-top: 20px
+        font-size: 18px
+        font-weight: 600
+      .faf
+        display: flex
+        justify-content: center
+        width: 100px
+        > div
+          display: flex
+          flex-direction: column
+          width: 50%
+          text-align: center
+    .home-contents
+      width: 1200px
+      margin: -50px auto 0 auto
+      z-index: 10
+      .home-nav
+        display: flex
+        justify-content: flex-start
+        height: 50px
+        > li
+          > a
+            height: 50px
+            line-height: 50px
+            margin: 0 20px
+            color: #ffffff
+            cursor: pointer
+            &:hover
+              color: #e7e1cd
+            &.active
+              color: #55a532
+      .home-content-wrapper
+        padding: 50px 20px
 </style>

@@ -37,21 +37,26 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   .tags-group
-    box-sizing: border-box
-    width: 1200px
-    padding: 20px
-    margin: 20px auto
-    background: #fbfbfb
+    box-sizing: border-box;
+    width: 1200px;
+    padding: 20px;
+    margin: 20px auto;
+    border: solid 1px #ccc;
+    box-shadow: 0 0 2px 2px #f5f5f5;
     .tags
       a
         display: inline-block
         padding: 3px 10px
         margin: 0 10px 10px 0
+        border: solid 1px transparent
+        border-radius: 5px
         color: #133131
         transition: all 0.3s
+        font-size: 14px
         &:hover
-          color: #ff9494
+          color: #cccccc
         &.active
-          background: #ff9494
-          color: #ffffff
+          border: solid 1px #ccc
+          background: linear-gradient(180deg, #f5f5f5, #ffffff 10%, #eeeeee)
+          color: #000000
 </style>

@@ -39,11 +39,13 @@ create by YOU
           </div>
           <ul class="songs">
             <li v-for="song in item.list">
-              <a href="javascript:;">
+              <router-link :to="pre + item.id">
                 <div class="s-id">{{ song.index }}</div>
                 <div class="s-name">{{ song.song }}</div>
+              </router-link>
+              <router-link :to="singerPre + item.singerId">
                 <div class="s-singer">{{ song.singer }}</div>
-              </a>
+              </router-link>
             </li>
           </ul>
         </li>
@@ -59,7 +61,9 @@ create by YOU
       return {
         backgroundPosition: [
           '0 0', '-300px 0', '-600px 0', '-900px 0'
-        ]
+        ],
+        pre: '/music/song/',
+        singerPre: '/music/artist/'
       }
     },
     props: {

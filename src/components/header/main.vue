@@ -1,12 +1,11 @@
 /*
 create by YOU
 */
-
-
 <template>
   <div class="header">
     <div class="logo">
-      <img src="../../assets/logo.png" alt="">
+      <!--<img src="../../assets/logo.png" alt="">-->
+       飞舞音乐汇
     </div>
     <div class="main-nav">
       <ul>
@@ -22,10 +21,12 @@ create by YOU
       </ul>
     </div>
     <div class="header-search">
-      <div class="header-search-border">
-        <input type="text" placeholder="搜索">
-        <span>&gt;</span>
-      </div>
+      <el-input
+        placeholder="输入歌手名或歌名"
+        icon="search"
+        v-model="searchData"
+        :on-icon-click="handleSearch">
+      </el-input>
     </div>
     <div class="header-login">
       <fd-login></fd-login>
@@ -36,92 +37,113 @@ create by YOU
 <script type="text/babel">
   import Login from './login.vue'
   export default {
+    name: 'fdHeader',
+    data () {
+      return {
+        searchData: ''
+      }
+    },
+    methods: {
+      handleSearch () {
+      }
+    },
     components: {
       'fd-login': Login
     }
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
   header-height = 70px
-  header-color = #133131
-  header-color-active = #ff9494
-  header-color-bg = #ffffff
+  header-color = #cccccc
+  header-color-hover = #ffffff
+  header-color-active = linear-gradient(180deg, #201f1f, #272727, #2a2a2a)
   .header
-    width: 1200px
+    position: relative
+    box-sizing: border-box
+    width: 100%
+    padding: 0 calc(50% - 600px)
     margin: 0 auto
-    height: header-height
-    border-bottom: solid 1px #efefef
+    height: header-height + 1px
+    border-top: solid 1px #000000
+    border-bottom: solid 1px #000000
+    background: linear-gradient(180deg, #353535, #1a1919)
+    &:before
+      position: absolute
+      left: 0
+      top: 0
+      content: ''
+      width: 100%
+      border-top: solid 1px #545454
     > div
       float: left
     .logo
       height: header-height
       width: 200px
+      line-height: header-height
+      font-size: 23px
+      font-weight: 400
+      color: #cccccc
       img
         height: 100%
     .main-nav
       height: header-height
       width: 600px
       ul
+        display: flex
+        justify-content: flex-start
         margin: 0
         padding: 0
         li
           list-style: none
           margin: 0
           padding: 0
-          display: inline-block
-          vertical-align: top
           a
+            position: relative
             box-sizing: border-box
             display: block
             width: 100%
-            height: header-height
+            height: header-height - 1px
             line-height: header-height
-            padding: 0 15px
+            padding: 0 20px
             color: header-color
-            font-size: 20px
+            font-size: 16px
             text-decoration: none
-            transition: all 0.3s
+            overflow: hidden
             &:hover
-              color: header-color-active
+              background: linear-gradient(180deg, #4a4a4a, #1a1919)
             &.active
-              color: header-color-bg
+              color: header-color-active
               background: header-color-active
+              &:before
+                content: ''
+                position: absolute
+                left: -2px
+                top: 0
+                height: 100%
+                width: 4px
+                border-radius: 100%
+                background: rgba(0, 0, 0, 0.5)
+                box-shadow: 0 2px 10px #000000
+              &:after
+                content: ''
+                position: absolute
+                right: -2px
+                top: 0
+                height: 100%
+                width: 4px
+                border-radius: 100%
+                background: rgba(0, 0, 0, 0.5)
+                box-shadow: 0 -2px 10px #000000
     .header-search
       height: header-height
+      line-height: header-height
       width: 200px
-      .header-search-border
-        position: relative
-        box-sizing: border-box
-        width: 180px
-        height: 40px
-        margin-top: 15px
-        border: solid 1px #ff9494
-        border-radius: 3px
-        input
-          box-sizing: border-box
-          outline: none
-          height: 30px
-          width: 150px
-          margin: 5px 0 5px 10px
-          border: none
-          color: #ff9494
-        span
-          position: absolute
-          right: 0
-          top: 0
-          display: block
-          height: 38px
-          line-height: 38px
-          width: 30px
-          color: #133131
-          font-size: 20px
-          text-align: center
-          cursor: pointer
-          transition: all 0.2s
-          &:hover
-            font-size: 24px
-            color: #ff9494
+      .el-input__inner
+        background: #eaeaea
+        border-color: transparent
+        &:active
+          border-color: transparent
     .header-login
       height: header-height
       width: 200px

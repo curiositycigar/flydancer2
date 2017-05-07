@@ -8,10 +8,19 @@ import MusicArtistsList from '../components/body/music/artist-list/mian.vue'
 import MusicTopList from '../components/body/music/top-list/main.vue'
 import MusicClassify from '../components/body/music/classify/main.vue'
 import Home from '../components/body/home/main.vue'
+import HomeList from '../components/body/home/pages/list.vue'
+import HomeFollow from '../components/body/home/pages/follow.vue'
+import HomeFans from '../components/body/home/pages/fans.vue'
+import HomeUpload from '../components/body/home/pages/upload.vue'
+import HomeLove from '../components/body/home/pages/love.vue'
+import HomeMe from '../components/body/home/pages/me.vue'
+import Community from '../components/body/community/main.vue'
+
+import User from '../components/body/components/user.vue'
+import Song from '../components/body/components/song.vue'
+import Artist from '../components/body/components/artist.vue'
 
 Vue.use(Router)
-
-let Empty = {}
 
 // 音乐馆：主页，歌手，排行，分类
 // 个人中心
@@ -19,6 +28,7 @@ let Empty = {}
 // 单页：歌手，歌曲
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -56,30 +66,77 @@ const router = new Router({
           path: 'classify',
           name: 'musicClassify',
           component: MusicClassify
+        },
+        {
+          path: 'user/:id',
+          name: 'user',
+          component: User
+        },
+        {
+          path: 'song/:id',
+          name: 'song',
+          component: Song
+        },
+        {
+          path: 'artist/:id',
+          name: 'artist',
+          component: Artist
         }
       ]
     },
     {
       path: '/home',
-      name: 'home',
-      component: Home
+      component: Home,
+      children: [
+        {
+          path: '',
+          beforeEnter (to, from, next) {
+            return next('/home/me')
+          }
+        },
+        {
+          path: 'list',
+          name: 'my-list',
+          component: HomeList
+        },
+        {
+          path: 'follow',
+          name: 'follow',
+          component: HomeFollow
+        },
+        {
+          path: 'fans',
+          name: 'fans',
+          component: HomeFans
+        },
+        {
+          path: 'upload',
+          name: 'my-upload',
+          component: HomeUpload
+        },
+        {
+          path: 'love',
+          name: 'my-love',
+          component: HomeLove
+        },
+        {
+          path: 'me',
+          name: 'my-me',
+          component: HomeMe
+        }
+      ]
     },
     {
       path: '/community',
       name: 'community',
-      component: Empty
-    },
-    {
-      path: '/singer',
-      name: 'singer',
-      component: Empty
-    },
-    {
-      path: '/song',
-      name: 'song',
-      component: Empty
+      component: Community
     }
   ],
+  scrollBehavior (to, from, savedPosition) {
+    if (!/^\/home.*/.test(from.path)) {
+      return {x: 0, y: 0}
+    }
+  },
   linkActiveClass: 'active'
 })
 
