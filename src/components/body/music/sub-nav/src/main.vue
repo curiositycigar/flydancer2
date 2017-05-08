@@ -18,6 +18,9 @@ create by YOU
       <li>
         <router-link to="/music/classify">分类</router-link>
       </li>
+      <li>
+        <router-link to="/music/search">搜索</router-link>
+      </li>
     </ul>
   </div>
 </template>

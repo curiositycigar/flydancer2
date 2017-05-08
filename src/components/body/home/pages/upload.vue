@@ -1,7 +1,33 @@
 <template>
   <div class="home-upload">
     <div class="upload-btns">
-      <el-button>上传新歌</el-button>
+      <el-button @click="showUploadWindow">上传新歌</el-button>
+      <el-dialog
+        title="上传歌曲"
+        :visible.sync="uploadWindowVisible"
+        :before-close="handleClose">
+        <el-form ref="form" :model="form" label-width="80px">
+          <el-form-item label="歌曲名称">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
+          <el-form-item label="歌曲文件">
+            <el-upload
+              ref="upload"
+              class="upload-demo"
+              :action="uploadAction"
+              :file-list="fileList"
+              :auto-upload="false"
+              :multiple="false"
+              :on-change="handleChange">
+              <el-button size="small" type="primary">选择文件</el-button>
+            </el-upload>
+          </el-form-item>
+          <el-form-item style="display: flex; justify-content: flex-end;">
+            <el-button type="primary" @click="onSubmit">立即提交</el-button>
+            <el-button @click="uploadWindowVisible = false">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
     </div>
     <el-table
       :data="uploadData"
@@ -45,7 +71,30 @@
             duration: '05:13',
             date: '2017-05-05 11:11:11'
           }
-        ]
+        ],
+        uploadWindowVisible: false,
+        uploadAction: '',
+        fileList: [],
+        form: {
+          name: ''
+        }
+      }
+    },
+    methods: {
+      showUploadWindow () {
+        this.uploadWindowVisible = true
+      },
+      handleClose () {
+        this.uploadWindowVisible = false
+      },
+      onSubmit () {
+        console.log('submit!')
+      },
+      handleChange (file, fileList) {
+        if (fileList.length > 1) {
+          this.$refs.upload.clearFiles()
+          this.fileList = [file]
+        }
       }
     }
   }

@@ -7,6 +7,8 @@ import MusicHome from '../components/body/music/home/main.vue'
 import MusicArtistsList from '../components/body/music/artist-list/mian.vue'
 import MusicTopList from '../components/body/music/top-list/main.vue'
 import MusicClassify from '../components/body/music/classify/main.vue'
+import MusicSearch from '../components/body/music/search/main.vue'
+
 import Home from '../components/body/home/main.vue'
 import HomeList from '../components/body/home/pages/list.vue'
 import HomeFollow from '../components/body/home/pages/follow.vue'
@@ -66,6 +68,11 @@ const router = new Router({
           path: 'classify',
           name: 'musicClassify',
           component: MusicClassify
+        },
+        {
+          path: 'search',
+          name: 'musicSearch',
+          component: MusicSearch
         },
         {
           path: 'user/:id',
