@@ -19,10 +19,10 @@
 </template>
 
 <script type="text/babel">
-  import singerImage from '../components/image/singer'
   import TagsGroup from '../components/tags-group.vue'
   import SingerItem from '../components/singer-item.vue'
   import HomeBox2 from '../components/home-box-2.vue'
+  import {mapGetters} from 'vuex'
   export default {
     data () {
       return {
@@ -31,96 +31,33 @@
           ['热门', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
         ],
         currentPage: 1,
-        data: [
-          {
-            name: '许嵩',
-            src: singerImage[0],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[1],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[2],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[3],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[0],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[1],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[3],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[0],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[1],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[2],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[3],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[0],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[1],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[2],
-            href: 'javascript:;'
-          },
-          {
-            name: '许嵩',
-            src: singerImage[3],
-            href: 'javascript:;'
-          }
-        ]
+        data: []
       }
+    },
+    mounted () {
+      let that = this
+      this.artists.then(function (data) {
+        that.data = data
+      })
     },
     components: {
       'fd-tags-group': TagsGroup,
       'fd-singer-item': SingerItem,
       'fd-home-box-2': HomeBox2
     },
+    computed: {
+      ...mapGetters({
+        artists: 'getArtists'
+      })
+    },
     methods: {
       changeActive (message) {
         console.log(message)
       },
-      handleSizeChange () {},
-      handleCurrentChange () {}
+      handleSizeChange () {
+      },
+      handleCurrentChange () {
+      }
     }
   }
 </script>
@@ -132,6 +69,7 @@
     flex-wrap: wrap
     width: 1200px
     margin: 0 auto
+
   .artist-pagination
     .el-pagination
       display: flex

@@ -1,11 +1,13 @@
 <template>
   <div class="singer-item-wrapper">
     <div class="singer-item">
-      <a :href="data.href">
-        <img :src="data.src" alt="">
-      </a>
+      <router-link :to="pre + data.singer_id">
+        <img :src="data.singer_pic" alt="">
+      </router-link>
       <h4 class="singer-name">
-        <a :href="data.href">{{ data.name }}</a>
+        <router-link :to="pre + data.singer_id">
+          <a :href="data.href">{{ data.singer_name }}</a>
+        </router-link>
       </h4>
     </div>
   </div>
@@ -15,6 +17,7 @@
   export default {
     data () {
       return {
+        pre: '/music/artist/'
       }
     },
     props: {

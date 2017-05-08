@@ -10,10 +10,10 @@ import Axios from 'axios'
 import './stylus/base.styl'
 import 'element-ui/lib/theme-default/index.css'
 
+Vue.prototype.$http = Axios
 Vue.use(Router)
 Vue.use(Element)
 Vue.config.productionTip = false
-Vue.prototype.$http = Axios
 
 /* eslint-disable no-new */
 new Vue({
