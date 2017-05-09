@@ -154,17 +154,20 @@
         wangyi: {
           songs: [],
           artists: [],
-          albums: []
+          albums: [],
+          bg: 200
         },
         kugou: {
           songs: [],
           artists: [],
-          albums: []
+          albums: [],
+          bg: 200
         },
         baidu: {
           songs: [],
           artists: [],
-          albums: []
+          albums: [],
+          bg: 200
         },
         label: '音乐',
         // songs artists albums
@@ -233,6 +236,9 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  .gray-bar
+    background: #f5f5f5 !important
+
   .music-search
     display: flex
     justify-content: center

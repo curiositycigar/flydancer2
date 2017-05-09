@@ -13,7 +13,8 @@ let store = new VueX.Store({
     username: '',
     nickname: '',
     playList: [],
-    artists: null
+    artists: null,
+    mySongs: null
   },
   getters: {
     getArtists (state) {
@@ -31,6 +32,49 @@ let store = new VueX.Store({
         })
       }
       return state.artists
+    },
+    getMySongs (state) {
+      if (state.mySongs === null) {
+        state.mySongs = new Promise(function (resolve, reject) {
+          resolve([
+            {
+              name: '我喜欢的',
+              count: 100,
+              open: true,
+              author: 'LitCigar',
+              love: 10,
+              songs: []
+            },
+            {
+              name: '搞笑的',
+              count: 5,
+              open: false,
+              author: 'LitCigar',
+              love: 10,
+              songs: []
+            }
+          ])
+        })
+      }
+      return state.mySongs
+    }
+  },
+  mutations: {
+    deleteMySongs (state, index) {
+      state.mySongs = new Promise(function (resolve, reject) {
+        resolve([
+          {
+            name: '我喜欢的',
+            count: 100,
+            open: true,
+            author: 'LitCigar',
+            love: 10,
+            songs: []
+          }
+        ])
+      })
+    },
+    editMySongs (state, index) {
     }
   }
 })

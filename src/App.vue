@@ -44,6 +44,7 @@
     min-height: 100%
     padding-bottom: 200px
     margin-bottom: -200px
+    background: #f5f5f5
     overflow: hidden
 
   .redBar

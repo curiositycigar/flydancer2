@@ -43,6 +43,7 @@
     margin: 20px auto;
     border: solid 1px #ccc;
     box-shadow: 0 0 2px 2px #f5f5f5;
+    background: #ffffff
     .tags
       a
         display: inline-block
