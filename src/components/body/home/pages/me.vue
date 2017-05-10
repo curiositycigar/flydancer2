@@ -62,9 +62,8 @@
       }
     },
     created () {
-      this.form = Object.assign({}, this.form, this.userData)
+      this.form = this.$_.cloneDeep(this.userData)
       this.form.user_list_open = !!parseInt(this.form.user_list_open)
-      console.log(this.form)
     },
     computed: {
       ...mapState(['userData'])
@@ -74,7 +73,7 @@
         console.log('submit!')
       },
       onReset () {
-        this.form = Object.assign({}, this.form, this.userData)
+        this.form = this.$_.cloneDeep(this.userData)
         this.form.user_list_open = !!parseInt(this.form.user_list_open)
       },
       beforeAvatarUpload (file) {

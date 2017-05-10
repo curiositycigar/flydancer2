@@ -133,7 +133,7 @@
       }
     },
     mounted () {
-      this.listData = Object.assign({}, this.mySongs)
+      this.listData = this.$_.cloneDeep(this.mySongs)
       for (let i = 0; i < this.listData.length; i++) {
         this.listData[i].my_list_open = !!parseInt(this.listData[i].my_list_open)
       }

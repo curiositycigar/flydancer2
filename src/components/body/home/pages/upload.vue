@@ -87,7 +87,6 @@
     },
     mounted () {
       this.uploadData = this.$_.cloneDeep(this.upload)
-      console.log(this.upload)
       for (let i = 0; i < this.uploadData.length; i++) {
         this.uploadData[i].upload_open = !!parseInt(this.uploadData[i].upload_open)
       }
