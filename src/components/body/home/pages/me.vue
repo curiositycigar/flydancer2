@@ -1,6 +1,18 @@
 <template>
   <div class="home-me">
     <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="上传头像">
+        <el-col :span="20">
+          <el-upload
+            class="avatar-uploader"
+            action=""
+            :show-file-list="false"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-col>
+      </el-form-item>
       <el-form-item label="昵称">
         <el-col :span="20">
           <el-input v-model="form.name"></el-input>
@@ -51,12 +63,23 @@
           desc: '没有简介',
           meOpen: 'all',
           listOpen: true
-        }
+        },
+        imageUrl: null
       }
     },
     methods: {
       onSubmit () {
         console.log('submit!')
+      },
+      beforeAvatarUpload (file) {
+        let that = this
+        // 图像预览
+        let reader = new FileReader()
+        reader.onload = function (e) {
+          that.imageUrl = e.target.result
+        }
+        reader.readAsDataURL(file)
+        return false
       }
     }
   }
@@ -69,4 +92,29 @@
     justify-content: center
     > form
       width: 500px
+
+
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #20a0ff;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 100px;
+    height: 100px;
+    line-height: 100px !important;
+    text-align: center;
+  }
+  .avatar {
+    width: 100px;
+    height: 100px;
+    display: block;
+  }
 </style>

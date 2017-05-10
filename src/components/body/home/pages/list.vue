@@ -44,37 +44,49 @@
       </el-table-column>
     </el-table>
     <el-dialog
+      class="dialog-delete"
+      v-if="deleteIndex !== -1"
       title="警告"
       :visible.sync="deleteDialog"
       size="tiny"
       :before-close="deleteClose">
-      <span>确定要删除此歌单？删除后不可恢复</span>
+      <span>确定要删除《{{listData[deleteIndex].name}}》歌单？删除后不可恢复</span>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="handleDelete">确 定</el-button>
         <el-button @click="deleteDialog = false">取 消</el-button>
       </span>
     </el-dialog>
     <el-dialog
+      class="dialog-look"
       v-if="lookIndex !== -1"
       title="歌单"
       :visible.sync="lookDialog"
       :before-close="lookClose">
-      <span>{{ listData[lookIndex].name }}</span>
-      <span>{{ listData[lookIndex].count }}</span>
-      <span>{{ listData[lookIndex].author }}</span>
+      <div class="songs-item-header">{{ listData[lookIndex].name }}</div>
+      <div class="songs-item-des">
+        <span class="s-h">作者:</span><span class="s-d">{{ listData[lookIndex].author }}</span>
+        <span class="s-h">曲目数:</span><span class="s-d">{{ listData[lookIndex].count }}</span>
+      </div>
       <el-table
         :data="listData[lookIndex].songs"
         stripe
         style="width: 100%">
         <el-table-column
           prop="name"
-          label="歌单">
+          label="歌名">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="歌手/上传者">
         </el-table-column>
         <el-table-column
           prop="name"
           label="操作">
           <template scope="scope">
             <el-button type="text">删除</el-button>
+            <!-- 站内音乐才可以播放和下载 -->
+            <el-button v-if="false" type="text">播放</el-button>
+            <el-button v-if="false" type="text">下载</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -145,9 +157,31 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped>
+<style lang="stylus" rel="stylesheet/stylus">
   .el-dialog__wrapper
     .el-dialog
       .el-dialog__header
-        border-bottom: solid 1px #000000
+        padding: 10px 20px
+        background: linear-gradient(180deg, #353535, #1a1919)
+        border-bottom: solid 3px #ff0000
+        font-size: 12px
+        .el-dialog__title
+          color: #cccccc
+  .home-list
+    .dialog-look
+      .el-dialog
+        .el-dialog__body
+          .songs-item-header
+            text-align: center
+            color: #000000
+            font-size: 20px
+            font-weight: 600
+          .songs-item-des
+            padding-bottom: 20px
+            font-size: 14px
+            .s-h
+              font-weight: 600
+            .s-d
+              font-weight: 400
+              padding-right: 10px
 </style>

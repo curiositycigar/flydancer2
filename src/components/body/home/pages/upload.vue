@@ -43,6 +43,17 @@
         width="180">
       </el-table-column>
       <el-table-column
+        label="是否公开"
+        width="180">
+        <template scope="scope">
+          <el-switch
+            v-model="scope.row.open"
+            on-text=""
+            off-text="">
+          </el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="date"
         label="上传日期"
         width="180">
@@ -69,6 +80,7 @@
             id: 123123,
             name: '我是革命',
             duration: '05:13',
+            open: false,
             date: '2017-05-05 11:11:11'
           }
         ],

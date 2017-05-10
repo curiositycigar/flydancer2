@@ -5,17 +5,20 @@
       <router-view></router-view>
     </div>
     <fd-footer></fd-footer>
+    <fd-player></fd-player>
   </div>
 </template>
 
 <script>
   import header from './components/header/main.vue'
   import footer from './components/footer/footer.vue'
+  import player from './components/player.vue'
   export default {
     name: 'app',
     components: {
       'fd-header': header,
-      'fd-footer': footer
+      'fd-footer': footer,
+      'fd-player': player
     }
   }
 </script>
