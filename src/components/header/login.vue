@@ -20,7 +20,7 @@ create by YOU
               <el-input v-model="login.password"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmitLogin">立即创建</el-button>
+              <el-button type="primary" @click="onSubmitLogin">登录</el-button>
               <el-button @click="toggleLogin">取消</el-button>
             </el-form-item>
           </el-form>
@@ -37,7 +37,7 @@ create by YOU
               <el-input v-model="login.password2"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmitLogin">立即创建</el-button>
+              <el-button type="primary" @click="onSubmitLogin">注册</el-button>
               <el-button @click="toggleLogin">取消</el-button>
             </el-form-item>
           </el-form>
@@ -73,6 +73,7 @@ create by YOU
         this.loginFields = false
       },
       onSubmitLogin () {
+        this.$store.commit('LOGIN', {})
       },
       onSubmitRegister () {
       }

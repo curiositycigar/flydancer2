@@ -4,25 +4,25 @@ create by YOU
 <template>
   <div class="home">
     <div class="redBar"></div>
-    <div v-if="userid" class="header">
+    <div v-if="login" class="header">
       <div class="avatar">
-        <img src="./bg_user.jpg" alt="">
+        <img :src="userData.user_avatar" alt="">
       </div>
       <div class="nickname">
-        Nick Name
+        {{ userData.user_nick_name }}
       </div>
       <div class="faf">
         <div>
-          <span>2</span>
+          <span>{{ userData.follow_count }}</span>
           <span>关注</span>
         </div>
         <div>
-          <span>0</span>
+          <span>{{ userData.fans_count }}</span>
           <span>粉丝</span>
         </div>
       </div>
     </div>
-    <div v-if="userid" class="home-contents">
+    <div v-if="login" class="home-contents">
       <ul class="home-nav">
         <li v-for="(item, index) in nav">
           <router-link :to="item.to">{{ item.name }}</router-link>
@@ -32,7 +32,7 @@ create by YOU
         <router-view></router-view>
       </div>
     </div>
-    <div v-if="!userid">
+    <div v-else>
       你需要登录
     </div>
   </div>
@@ -59,9 +59,8 @@ create by YOU
     store,
     computed: {
       ...mapState([
-        'userid',
-        'username',
-        'nickname'
+        'login',
+        'userData'
       ])
     },
     methods: {}

@@ -1,20 +1,23 @@
 <template>
   <div class="home-list">
+    <div class="home-list-add">
+      <el-button @click="addDialog = true">新建歌单</el-button>
+    </div>
     <el-table
       :data="listData"
       stripe
       style="width: 100%">
       <el-table-column
-        prop="name"
+        prop="my_list_name"
         label="歌单">
       </el-table-column>
       <el-table-column
-        prop="count"
+        prop="my_list_count"
         label="曲目数"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="author"
+        prop="my_list_user_name"
         label="创建人"
         width="180">
       </el-table-column>
@@ -28,7 +31,7 @@
         width="180">
         <template scope="scope">
           <el-switch
-            v-model="scope.row.open"
+            v-model="scope.row.my_list_open"
             on-text=""
             off-text="">
           </el-switch>
@@ -50,7 +53,7 @@
       :visible.sync="deleteDialog"
       size="tiny"
       :before-close="deleteClose">
-      <span>确定要删除《{{listData[deleteIndex].name}}》歌单？删除后不可恢复</span>
+      <span>确定要删除《{{listData[deleteIndex].my_list_name}}》歌单？删除后不可恢复</span>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="handleDelete">确 定</el-button>
         <el-button @click="deleteDialog = false">取 消</el-button>
@@ -62,25 +65,24 @@
       title="歌单"
       :visible.sync="lookDialog"
       :before-close="lookClose">
-      <div class="songs-item-header">{{ listData[lookIndex].name }}</div>
+      <div class="songs-item-header">{{ listData[lookIndex].my_list_name }}</div>
       <div class="songs-item-des">
-        <span class="s-h">作者:</span><span class="s-d">{{ listData[lookIndex].author }}</span>
-        <span class="s-h">曲目数:</span><span class="s-d">{{ listData[lookIndex].count }}</span>
+        <span class="s-h">作者:</span><span class="s-d">{{ listData[lookIndex].my_list_user_name }}</span>
+        <span class="s-h">曲目数:</span><span class="s-d">{{ listData[lookIndex].my_list_count }}</span>
       </div>
       <el-table
-        :data="listData[lookIndex].songs"
+        :data="listData[lookIndex].music"
         stripe
         style="width: 100%">
         <el-table-column
-          prop="name"
+          prop="upload_music_name"
           label="歌名">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="upload_user_name"
           label="歌手/上传者">
         </el-table-column>
         <el-table-column
-          prop="name"
           label="操作">
           <template scope="scope">
             <el-button type="text">删除</el-button>
@@ -95,11 +97,29 @@
         <el-button @click="lookDialog = false">取 消</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      class="dialog-add"
+      title="新建歌单"
+      :visible.sync="addDialog"
+      size="tiny"
+      :before-close="addClose">
+      <el-row>
+        <el-col :span="4" style="line-height: 35px">歌单名</el-col>
+        <el-col :span="20">
+          <el-input v-model="name"></el-input>
+        </el-col>
+        <el-col :span="8"></el-col>
+      </el-row>
+      <span slot="footer">
+        <el-button type="primary">确定创建</el-button>
+        <el-button @click="addDialog = false">取 消</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script type="text/babel">
-  import {mapGetters} from 'vuex'
+  import {mapState} from 'vuex'
   export default {
     data () {
       return {
@@ -107,27 +127,26 @@
         lookIndex: -1,
         deleteIndex: -1,
         deleteDialog: false,
-        lookDialog: false
+        lookDialog: false,
+        addDialog: false,
+        name: ''
       }
     },
     mounted () {
-      let that = this
-      that.mySongs.then(function (data) {
-        that.listData = data
-      })
+      this.listData = Object.assign({}, this.mySongs)
+      for (let i = 0; i < this.listData.length; i++) {
+        this.listData[i].my_list_open = !!parseInt(this.listData[i].my_list_open)
+      }
     },
     watch: {
       mySongs (val) {
-        let that = this
-        val.then(function (data) {
-          that.listData = data
-        })
+        this.listData = val
       }
     },
     computed: {
-      ...mapGetters({
-        mySongs: 'getMySongs'
-      })
+      ...mapState([
+        'mySongs'
+      ])
     },
     methods: {
       openLookWindow (row) {
@@ -144,7 +163,8 @@
         this.lookDialog = false
       },
       handleDelete () {
-        this.$store.commit('deleteMySongs', this.lookIndex)
+        this.$store.commit('deleteMySongs', this.deleteIndex)
+        this.deleteIndex = -1
         this.deleteDialog = false
       },
       deleteClose () {
@@ -152,6 +172,9 @@
       },
       lookClose () {
         this.lookDialog = false
+      },
+      addClose () {
+        this.addDialog = false
       }
     }
   }
@@ -167,7 +190,10 @@
         font-size: 12px
         .el-dialog__title
           color: #cccccc
+
   .home-list
+    .home-list-add
+      padding: 20px 0
     .dialog-look
       .el-dialog
         .el-dialog__body

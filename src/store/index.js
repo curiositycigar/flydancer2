@@ -9,12 +9,21 @@ Vue.use(VueX)
 
 let store = new VueX.Store({
   state: {
-    userid: 23123,
-    username: '',
-    nickname: '',
+    login: false,
+    userData: {},
     playList: [],
+    // 歌手列表
     artists: null,
-    mySongs: null
+    // 歌单
+    mySongs: {},
+    // 收藏
+    collection: {},
+    // 关注
+    follow: {},
+    // 粉丝
+    fans: {},
+    // 上传
+    upload: {}
   },
   getters: {
     getArtists (state) {
@@ -32,49 +41,68 @@ let store = new VueX.Store({
         })
       }
       return state.artists
-    },
-    getMySongs (state) {
-      if (state.mySongs === null) {
-        state.mySongs = new Promise(function (resolve, reject) {
-          resolve([
-            {
-              name: '我喜欢的',
-              count: 100,
-              open: true,
-              author: 'LitCigar',
-              love: 10,
-              songs: []
-            },
-            {
-              name: '搞笑的',
-              count: 5,
-              open: false,
-              author: 'LitCigar',
-              love: 10,
-              songs: []
-            }
-          ])
-        })
-      }
-      return state.mySongs
     }
   },
   mutations: {
+    // 新建歌单
+    addMySongs (state, name) {
+    },
+    // 删除歌单
     deleteMySongs (state, index) {
-      state.mySongs = new Promise(function (resolve, reject) {
-        resolve([
-          {
-            name: '我喜欢的',
-            count: 100,
-            open: true,
-            author: 'LitCigar',
-            love: 10,
-            songs: []
-          }
-        ])
+      state.mySongs = [
+        {
+          name: '搞笑的',
+          count: 100,
+          open: true,
+          author: 'LitCigar',
+          love: 10,
+          songs: []
+        }
+      ]
+    },
+    // 编辑歌单(待开发)
+    editMySongs (state, index) {
+    },
+    // toggle歌单公开属性
+    toggleMysongs () {
+    },
+    // 删除歌单中收藏的歌曲
+    deleteListItem (state, index) {
+    },
+    // 关注
+    doFollow () {
+    },
+    // 取消关注
+    notFollow () {
+    },
+    // 收藏
+    // {
+    //    ...data,
+    //    success ()
+    //    error ()
+    // }
+    // 收藏外部音乐
+    collectionOutside (state, data) {
+    },
+    // 收藏内部音乐
+    collectionInside (state, data) {
+    },
+    // 登录
+    LOGIN (state, data) {
+      Axios.get('http://222.24.63.118/v3/user/app1_user/18829291269').then(function (res) {
+        if (res.status === 200) {
+          state.userData = res.data.user_info[0]
+          state.mySongs = res.data.my_music_list
+          state.collection = res.data.collection
+          state.follow = res.data.follow
+          state.fans = res.data.fans
+          state.upload = res.data.upload_info
+          state.login = true
+        }
       })
     },
-    editMySongs (state, index) {
+    LOGOUT (state, data) {
+      state.login = false
     }
   }
 })

@@ -1,85 +1,25 @@
 <template>
   <div class="home-fans">
-    <fd-author v-for="item in fans" :key="item.id" :data="item"></fd-author>
+    <fd-author v-for="(item, index) in fans" :key="index" :data="item"></fd-author>
   </div>
 </template>
 
 <script type="text/babel">
-  import pic from './pic.jpg'
   import Author from './components/author.vue'
+  import {mapState} from 'vuex'
   export default {
     components: {
       'fd-author': Author
     },
     data () {
       return {
-        fans: [
-          {
-            id: 221321,
-            src: pic,
-            name: 'FlyDancer',
-            lists: 5,
-            follows: 10,
-            fans: 12,
-            follow: false
-          },
-          {
-            id: 221321,
-            src: pic,
-            name: 'Bello',
-            lists: 5,
-            follows: 213,
-            fans: 121,
-            follow: false
-          },
-          {
-            id: 221321,
-            src: pic,
-            name: 'Bello',
-            lists: 5,
-            follows: 213,
-            fans: 121,
-            follow: false
-          },
-          {
-            id: 221321,
-            src: pic,
-            name: 'Bello',
-            lists: 5,
-            follows: 213,
-            fans: 121,
-            follow: false
-          },
-          {
-            id: 221321,
-            src: pic,
-            name: 'Bello',
-            lists: 5,
-            follows: 213,
-            fans: 121,
-            follow: false
-          },
-          {
-            id: 221321,
-            src: pic,
-            name: 'Bello',
-            lists: 5,
-            follows: 213,
-            fans: 121,
-            follow: false
-          },
-          {
-            id: 221321,
-            src: pic,
-            name: 'Bello',
-            lists: 5,
-            follows: 213,
-            fans: 121,
-            follow: false
-          }
-        ],
         pre: '/user/'
       }
+    },
+    computed: {
+      ...mapState([
+        'fans'
+      ])
     }
   }
 </script>

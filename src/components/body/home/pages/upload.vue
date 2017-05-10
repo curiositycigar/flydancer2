@@ -34,12 +34,12 @@
       stripe
       style="width: 100%">
       <el-table-column
-        prop="name"
+        prop="upload_music_name"
         label="歌名">
       </el-table-column>
       <el-table-column
-        prop="duration"
-        label="时长"
+        prop="upload_user_name"
+        label="上传者"
         width="180">
       </el-table-column>
       <el-table-column
@@ -47,14 +47,14 @@
         width="180">
         <template scope="scope">
           <el-switch
-            v-model="scope.row.open"
+            v-model="scope.row.upload_open"
             on-text=""
             off-text="">
           </el-switch>
         </template>
       </el-table-column>
       <el-table-column
-        prop="date"
+        prop="upload_date"
         label="上传日期"
         width="180">
       </el-table-column>
@@ -72,18 +72,11 @@
 </template>
 
 <script type="text/babel">
+  import {mapState} from 'vuex'
   export default {
     data () {
       return {
-        uploadData: [
-          {
-            id: 123123,
-            name: '我是革命',
-            duration: '05:13',
-            open: false,
-            date: '2017-05-05 11:11:11'
-          }
-        ],
+        uploadData: [],
         uploadWindowVisible: false,
         uploadAction: '',
         fileList: [],
@@ -91,6 +84,18 @@
           name: ''
         }
       }
+    },
+    mounted () {
+      this.uploadData = this.$_.cloneDeep(this.upload)
+      console.log(this.upload)
+      for (let i = 0; i < this.uploadData.length; i++) {
+        this.uploadData[i].upload_open = !!parseInt(this.uploadData[i].upload_open)
+      }
+    },
+    computed: {
+      ...mapState([
+        'upload'
+      ])
     },
     methods: {
       showUploadWindow () {

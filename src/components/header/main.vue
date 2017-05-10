@@ -5,7 +5,7 @@ create by YOU
   <div class="header">
     <div class="logo">
       <!--<img src="../../assets/logo.png" alt="">-->
-       飞舞音乐汇
+      飞舞音乐汇
     </div>
     <div class="main-nav">
       <ul>
@@ -28,14 +28,22 @@ create by YOU
         :on-icon-click="handleSearch">
       </el-input>
     </div>
-    <div class="header-login">
+    <div v-if="!login" class="header-login">
       <fd-login></fd-login>
+    </div>
+    <div v-else class="header-username">
+      欢迎您!
+      <router-link to="">
+        {{ userData.user_nick_name }}
+      </router-link>
+      <el-button type="text" style="font-size: 16px;color: #cccccc;" @click="LOGOUT">退出</el-button>
     </div>
   </div>
 </template>
 
 <script type="text/babel">
   import Login from './login.vue'
+  import {mapState, mapMutations} from 'vuex'
   export default {
     name: 'fdHeader',
     data () {
@@ -43,9 +51,17 @@ create by YOU
         searchData: ''
       }
     },
+    computed: {
+      ...mapState([
+        'login', 'userData'
+      ])
+    },
     methods: {
       handleSearch () {
-      }
+      },
+      ...mapMutations([
+        'LOGOUT'
+      ])
     },
     components: {
       'fd-login': Login
@@ -147,4 +163,14 @@ create by YOU
     .header-login
       height: header-height
       width: 200px
+    .header-username
+      height: header-height
+      width: 200px
+      line-height: header-height
+      text-align: center
+      color: #cccccc
+      a
+        color: #ffffff
+        font-size: 16px
+
 </style>

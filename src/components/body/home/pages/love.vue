@@ -5,16 +5,16 @@
       stripe
       style="width: 100%">
       <el-table-column
-        prop="name"
+        prop="my_list_name"
         label="歌单">
       </el-table-column>
       <el-table-column
-        prop="count"
+        prop="my_list_count"
         label="曲目数"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="author"
+        prop="my_list_user_name"
         label="创建人"
         width="180">
       </el-table-column>
@@ -36,25 +36,26 @@
 </template>
 
 <script type="text/babel">
+  import {mapState} from 'vuex'
   export default {
     data () {
       return {
-        loveData: [
-          {
-            name: '我喜欢的',
-            count: 5,
-            author: 'LitCigar',
-            love: 10
-          },
-          {
-            name: '我喜欢的',
-            count: 5,
-            author: 'LitCigar',
-            love: 10
-          }
-        ]
+        loveData: []
       }
-    }
+    },
+    mounted () {
+      this.loveData = Object.assign({}, this.collection)
+      for (let i = 0; i < this.loveData.length; i++) {
+        this.loveData[i] = Object.assign(this.loveData[i], this.loveData[i].collection_list[0])
+      }
+      console.log(this.loveData[0])
+    },
+    computed: {
+      ...mapState([
+        'collection'
+      ])
+    },
+    method: {}
   }
 </script>
 

@@ -6,11 +6,13 @@ import Element from 'element-ui'
 import router from './router'
 import App from './App'
 import Axios from 'axios'
+import _ from 'lodash'
 
 import './stylus/base.styl'
 import 'element-ui/lib/theme-default/index.css'
 
 Vue.prototype.$http = Axios
+Vue.prototype.$_ = _
 Vue.use(Router)
 Vue.use(Element)
 Vue.config.productionTip = false
