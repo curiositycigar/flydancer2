@@ -58,6 +58,11 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column v-if="filterCurrent === 'songs'" label="操作" width="70">
+            <template scope="scope">
+              <el-button type="text" @click="collection(scope.row)">收藏</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
       <el-col :span="8">
@@ -97,6 +102,11 @@
                   {{ scope.row.artistname }}
                 </a>
               </div>
+            </template>
+          </el-table-column>
+          <el-table-column v-if="filterCurrent === 'songs'" label="操作" width="70">
+            <template scope="scope">
+              <el-button type="text" @click="collection(scope.row)">收藏</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -140,6 +150,11 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column v-if="filterCurrent === 'songs'" label="操作" width="70">
+            <template scope="scope">
+              <el-button type="text" @click="collection(scope.row)">收藏</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
     </el-row>
@@ -147,6 +162,7 @@
 </template>
 
 <script type="text/babel">
+  import {mapMutations} from 'vuex'
   export default {
     data () {
       return {
@@ -189,6 +205,9 @@
       }
     },
     methods: {
+      ...mapMutations({
+        collection: 'collectionOutside'
+      }),
       handleSearch () {
         let that = this
         let url = {

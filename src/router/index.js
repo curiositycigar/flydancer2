@@ -16,6 +16,7 @@ import HomeFans from '../components/body/home/pages/fans.vue'
 import HomeUpload from '../components/body/home/pages/upload.vue'
 import HomeLove from '../components/body/home/pages/love.vue'
 import HomeMe from '../components/body/home/pages/me.vue'
+import HomePassword from '../components/body/home/pages/password.vue'
 import Community from '../components/body/community/main.vue'
 
 import User from '../components/body/components/user.vue'
@@ -130,6 +131,11 @@ const router = new Router({
           path: 'me',
           name: 'my-me',
           component: HomeMe
+        },
+        {
+          path: 'password',
+          name: 'my-password',
+          component: HomePassword
         }
       ]
     },

@@ -36,11 +36,9 @@
                     </a>
                   </template>
                 </el-table-column>
-                <el-table-column
-                  label="操作"
-                  width="70">
+                <el-table-column label="操作" width="70">
                   <template scope="scope">
-                    <el-button type="text" @click="love({})">收藏</el-button>
+                    <el-button type="text" @click="collection(scope.row)">收藏</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -53,6 +51,7 @@
 </template>
 
 <script type="text/babel">
+  import {mapMutations} from 'vuex'
   import api from './api'
   export default {
     components: {},
@@ -84,7 +83,10 @@
     methods: {
       handlerChange (query) {
         console.log(query)
-      }
+      },
+      ...mapMutations({
+        collection: 'collectionOutside'
+      })
     }
   }
 </script>

@@ -45,10 +45,10 @@ let store = new VueX.Store({
   },
   mutations: {
     // 新建歌单
-    addMySongs (state, name) {
+    addMySongs (state, data) {
     },
     // 删除歌单
-    deleteMySongs (state, index) {
+    deleteMySongs (state, data) {
       state.mySongs = [
         {
           name: '搞笑的',
@@ -61,21 +61,24 @@ let store = new VueX.Store({
       ]
     },
     // 编辑歌单(待开发)
-    editMySongs (state, index) {
+    editMySongs (state, data) {
     },
     // toggle歌单公开属性
-    toggleMysongs () {
+    toggleMysongs (state, data) {
     },
     // 删除歌单中收藏的歌曲
-    deleteListItem (state, index) {
+    deleteListItem (state, data) {
     },
     // 关注
-    doFollow () {
+    doFollow (state, data) {
     },
     // 取消关注
-    notFollow () {
+    notFollow (state, data) {
     },
-    // 收藏
+    // 删除收藏的歌单
+    deleteCollection (state, data) {
+    },
+    // 收藏歌曲
     // {
     //    ...data,
     //    success ()
@@ -89,7 +92,10 @@ let store = new VueX.Store({
     },
     // 登录
     LOGIN (state, data) {
-      Axios.get('http://222.24.63.118/v3/user/app1_user/18829291269').then(function (res) {
+      Axios.post('http://222.24.63.118/v3/user', {
+        user_name: data.username,
+        user_password: data.password
+      }, function (res) {
         if (res.status === 200) {
           state.userData = res.data.user_info[0]
           state.mySongs = res.data.my_music_list
@@ -100,6 +106,17 @@ let store = new VueX.Store({
           state.login = true
         }
       })
+      // Axios.get('http://222.24.63.118/v3/user/app1_user/18829291269').then(function (res) {
+      //   if (res.status === 200) {
+      //     state.userData = res.data.user_info[0]
+      //     state.mySongs = res.data.my_music_list
+      //     state.collection = res.data.collection
+      //     state.follow = res.data.follow
+      //     state.fans = res.data.fans
+      //     state.upload = res.data.upload_info
+      //     state.login = true
+      //   }
+      // })
     },
     LOGOUT (state, data) {
       state.login = false

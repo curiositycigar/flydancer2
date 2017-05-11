@@ -57,8 +57,8 @@ create by YOU
         showLogin: false,
         loginFields: true,
         login: {
-          username: '',
-          password: ''
+          username: '18829291269',
+          password: 'feilei123'
         }
       }
     },
@@ -73,7 +73,7 @@ create by YOU
         this.loginFields = false
       },
       onSubmitLogin () {
-        this.$store.commit('LOGIN', {})
+        this.$store.commit('LOGIN', this.login)
       },
       onSubmitRegister () {
       }

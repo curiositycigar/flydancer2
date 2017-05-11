@@ -32,6 +32,7 @@
         <template scope="scope">
           <el-switch
             v-model="scope.row.my_list_open"
+            @change="handleToggle(scope.row)"
             on-text=""
             off-text="">
           </el-switch>
@@ -149,6 +150,9 @@
       ])
     },
     methods: {
+      handleToggle (row) {
+        this.$store.commit('toggleMysongs', row)
+      },
       openLookWindow (row) {
         // 刷新数据
         this.lookIndex = this.listData.indexOf(row)
@@ -163,7 +167,7 @@
         this.lookDialog = false
       },
       handleDelete () {
-        this.$store.commit('deleteMySongs', this.deleteIndex)
+        this.$store.commit('deleteMySongs', this.listData[this.deleteIndex])
         this.deleteIndex = -1
         this.deleteDialog = false
       },

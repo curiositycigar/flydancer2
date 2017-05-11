@@ -57,6 +57,13 @@
               prop="music_album"
               label="所属专辑">
             </el-table-column>
+            <el-table-column
+              label="操作"
+              width="100">
+              <template scope="scope">
+                <el-button type="text" @click="collection(scope.row)">收藏</el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </div>
       </div>
@@ -65,7 +72,7 @@
 </template>
 
 <script type="text/babel">
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapMutations} from 'vuex'
   export default {
     data () {
       return {
@@ -113,6 +120,11 @@
     computed: {
       ...mapGetters({
         artists: 'getArtists'
+      })
+    },
+    methods: {
+      ...mapMutations({
+        collection: 'collectionOutside'
       })
     }
   }

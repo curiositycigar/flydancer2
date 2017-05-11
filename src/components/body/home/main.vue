@@ -52,7 +52,8 @@ create by YOU
           {name: '收藏', to: '/home/love'},
           {name: '粉丝', to: '/home/fans'},
           {name: '上传的歌曲', to: '/home/upload'},
-          {name: '个人设置', to: '/home/me'}
+          {name: '个人设置', to: '/home/me'},
+          {name: '安全中心', to: '/home/password'}
         ]
       }
     },
