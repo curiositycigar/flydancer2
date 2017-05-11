@@ -86,10 +86,10 @@
         <el-table-column
           label="操作">
           <template scope="scope">
-            <el-button type="text">删除</el-button>
+            <el-button type="text" @click="openDeleteSongWindow">删除</el-button>
             <!-- 站内音乐才可以播放和下载 -->
-            <el-button v-if="false" type="text">播放</el-button>
-            <el-button v-if="false" type="text">下载</el-button>
+            <el-button v-if="scope.row.from_self === '1'" type="text">播放</el-button>
+            <el-button v-if="scope.row.from_self === '1'" type="text">下载</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -116,6 +116,17 @@
         <el-button @click="addDialog = false">取 消</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      title="删除歌曲"
+      size="tiny"
+      :visible.sync="deleteSongDialog"
+      :before-close="deleteSongClose">
+      确定删除?
+      <span slot="footer">
+        <el-button type="primary" @click="handleDeleteSong">确定删除</el-button>
+        <el-button @click="deleteSongDialog = false">取 消</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -127,9 +138,11 @@
         listData: [],
         lookIndex: -1,
         deleteIndex: -1,
+        deleteSongIndex: -1,
         deleteDialog: false,
         lookDialog: false,
         addDialog: false,
+        deleteSongDialog: false,
         name: ''
       }
     },
@@ -153,29 +166,42 @@
       handleToggle (row) {
         this.$store.commit('toggleMysongs', row)
       },
+      // 查看
       openLookWindow (row) {
         // 刷新数据
         this.lookIndex = this.listData.indexOf(row)
         this.lookDialog = true
       },
+      handleLook () {
+        this.lookDialog = false
+      },
+      lookClose () {
+        this.lookDialog = false
+      },
+      // 删除
       openDeleteWindow (row) {
         // 删除并关闭dialog
         this.deleteIndex = this.listData.indexOf(row)
         this.deleteDialog = true
       },
-      handleLook () {
-        this.lookDialog = false
+      deleteClose () {
+        this.deleteDialog = false
       },
       handleDelete () {
         this.$store.commit('deleteMySongs', this.listData[this.deleteIndex])
         this.deleteIndex = -1
         this.deleteDialog = false
       },
-      deleteClose () {
-        this.deleteDialog = false
+      // 删除单曲
+      openDeleteSongWindow (row) {
+        this.deleteSongIndex = this.listData[this.lookIndex].music.indexOf(row)
+        this.deleteSongDialog = true
       },
-      lookClose () {
-        this.lookDialog = false
+      deleteSongClose () {
+        this.deleteSongDialog = false
+      },
+      handleDeleteSong () {
+        this.deleteSongDialog = false
       },
       addClose () {
         this.addDialog = false

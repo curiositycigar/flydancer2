@@ -6,27 +6,24 @@
         title="上传歌曲"
         :visible.sync="uploadWindowVisible"
         :before-close="handleClose">
-        <el-form ref="form" :model="form" label-width="80px">
+        <el-form ref="form" :model="form"
+                 method="post"
+                 label-width="80px"
+                 enctype="multipart/form-data"
+                 action="http://222.24.63.118/post/upload">
           <el-form-item label="歌曲名称">
-            <el-input v-model="form.name"></el-input>
+            <el-input name="upload_music_name" v-model="form.name"></el-input>
           </el-form-item>
           <el-form-item label="歌曲文件">
-            <el-upload
-              ref="upload"
-              class="upload-demo"
-              :action="uploadAction"
-              :file-list="fileList"
-              :auto-upload="false"
-              :multiple="false"
-              :on-change="handleChange">
-              <el-button size="small" type="primary">选择文件</el-button>
-            </el-upload>
+            <input name="upload_music_file_url" type="file" :value="form.file">
+            <input name="upload_user_name" type="hidden" :value="form.userName">
           </el-form-item>
           <el-form-item style="display: flex; justify-content: flex-end;">
             <el-button type="primary" @click="onSubmit">立即提交</el-button>
             <el-button @click="uploadWindowVisible = false">取消</el-button>
           </el-form-item>
         </el-form>
+        <iframe name="iframe" src="" ref="iframe" frameborder="0" style="display:none;"></iframe>
       </el-dialog>
     </div>
     <el-table
@@ -78,17 +75,28 @@
       return {
         uploadData: [],
         uploadWindowVisible: false,
-        uploadAction: '',
+        uploadAction: 'http://222.24.63.118/post/upload',
         fileList: [],
         form: {
-          name: ''
+          name: '8888888',
+          file: '',
+          userName: ''
         }
       }
     },
     mounted () {
+      this.form.userName = this.$store.state.userData.user_name
       this.uploadData = this.$_.cloneDeep(this.upload)
       for (let i = 0; i < this.uploadData.length; i++) {
         this.uploadData[i].upload_open = !!parseInt(this.uploadData[i].upload_open)
+      }
+    },
+    watch: {
+      upload () {
+        this.uploadData = this.$_.cloneDeep(this.upload)
+        for (let i = 0; i < this.uploadData.length; i++) {
+          this.uploadData[i].upload_open = !!parseInt(this.uploadData[i].upload_open)
+        }
       }
     },
     computed: {
@@ -104,11 +112,26 @@
         this.uploadWindowVisible = false
       },
       onSubmit () {
-        console.log('submit!')
+        // 草
+        let form = this.$refs.form.$el.cloneNode(true)
+        window.frames['iframe'].document.body.appendChild(form)
+        form.submit()
+        ;(function check () {
+          if (!window.frames['iframe'].document.body.querySelector('pre')) {
+            setTimeout(check, 100)
+          } else {
+            console.log(window.frames['iframe'].document.body)
+          }
+        })()
       },
       handleChange (file, fileList) {
-        if (fileList.length > 1) {
+        if (file.raw.type !== 'audio/mp3') {
+          this.$message.error('文件类型必须是mp3')
+          this.fileList = []
+        } else if (fileList.length > 1) {
           this.$refs.upload.clearFiles()
+          this.fileList = [file]
+        } else {
           this.fileList = [file]
         }
       }

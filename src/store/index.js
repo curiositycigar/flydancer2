@@ -4,6 +4,7 @@
 import Vue from 'vue'
 import VueX from 'vuex'
 import Axios from 'axios'
+import $ from 'jquery'
 
 Vue.use(VueX)
 
@@ -44,6 +45,12 @@ let store = new VueX.Store({
     }
   },
   mutations: {
+    // 修改用户数据
+    updateUserData (state, data) {
+    },
+    // 修改密码
+    updatePassword (state, data) {
+    },
     // 新建歌单
     addMySongs (state, data) {
     },
@@ -90,12 +97,55 @@ let store = new VueX.Store({
     // 收藏内部音乐
     collectionInside (state, data) {
     },
+    // 上传
+    uploadSong (state, data) {
+      $.ajax({
+        type: 'POST',
+        url: '',
+        data: data.data,
+        processData: false,
+        contentType: 'multipart/form-data',
+        success: function (res) {
+          console.log(res)
+        }
+      })
+      // let formData = new FormData()
+      // formData.append('upload_user_name', state.userData.user_name)
+      // formData.append('upload_music_name', data.data.upload_music_name)
+      // formData.append('upload_music_file_url', data.data.upload_music_file_url)
+      // Axios({
+      //   method: 'post',
+      //   url: 'http://222.24.63.118/post/upload',
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data'
+      //   },
+      //   params: formData
+      // }).then(function (res) {
+      //   console.log(res)
+      //   state.upload.push({
+      //     upload_id: '1',
+      //     upload_user_name: state.userData.user_name,
+      //     upload_music_name: data.data.upload_music_name,
+      //     upload_open: '1',
+      //     upload_date: '2017-05-09 11:20:27.503527',
+      //     upload_music_file_url: 'http://222.24.63.118:8080/upload/upload/jianshu',
+      //     from_self: '1'
+      //   })
+      //   data.message('提交成功')
+      // }).catch(function () {
+      //   data.message.error('提交失败')
+      // })
+    },
     // 登录
     LOGIN (state, data) {
-      Axios.post('http://222.24.63.118/v3/user', {
-        user_name: data.username,
-        user_password: data.password
-      }, function (res) {
+      Axios({
+        method: 'post',
+        url: 'http://222.24.63.118/v3/user',
+        params: {
+          user_name: data.username,
+          user_password: data.password
+        }
+      }).then(function (res) {
         if (res.status === 200) {
           state.userData = res.data.user_info[0]
           state.mySongs = res.data.my_music_list
@@ -105,19 +155,11 @@ let store = new VueX.Store({
           state.upload = res.data.upload_info
           state.login = true
         }
+      }).catch(function (err) {
+        console.log(err)
       })
-      // Axios.get('http://222.24.63.118/v3/user/app1_user/18829291269').then(function (res) {
-      //   if (res.status === 200) {
-      //     state.userData = res.data.user_info[0]
-      //     state.mySongs = res.data.my_music_list
-      //     state.collection = res.data.collection
-      //     state.follow = res.data.follow
-      //     state.fans = res.data.fans
-      //     state.upload = res.data.upload_info
-      //     state.login = true
-      //   }
-      // })
     },
+    // 登出
     LOGOUT (state, data) {
       state.login = false
     }

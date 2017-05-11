@@ -70,6 +70,7 @@
     },
     methods: {
       onSubmit () {
+        this.$store.commit('updateUserData', this.form)
         console.log('submit!')
       },
       onReset () {
