@@ -60,7 +60,7 @@
           </el-table-column>
           <el-table-column v-if="filterCurrent === 'songs'" label="操作" width="70">
             <template scope="scope">
-              <el-button type="text" @click="collection(scope.row)">收藏</el-button>
+              <el-button type="text" @click="handleCollection({name:scope.row.name,url:'http://music.163.com/song/' + scope.row.id,artist:scope.row.artists[0].name})">收藏</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -106,7 +106,7 @@
           </el-table-column>
           <el-table-column v-if="filterCurrent === 'songs'" label="操作" width="70">
             <template scope="scope">
-              <el-button type="text" @click="collection(scope.row)">收藏</el-button>
+              <el-button type="text" @click="handleCollection({name:scope.row.songname,url:'http://music.baidu.com/song/' + scope.row.songid, artist:scope.row.artistname})">收藏</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -120,7 +120,7 @@
             :label="`酷狗音乐:${label}`">
             <template scope="scope">
               <div class="search-result-songs" v-if="filterCurrent === 'songs'">
-                <a class="search-result-songs-song" :href="`http://music.baidu.com/song/${scope.row.hash}`"
+                <a class="search-result-songs-song" :href="`http://www.kugou.com/song/#hash=${scope.row.hash}&album_id=${scope.row.album_id}`"
                    target="_blank">
                   {{ scope.row.filename }}
                 </a>
@@ -152,17 +152,35 @@
           </el-table-column>
           <el-table-column v-if="filterCurrent === 'songs'" label="操作" width="70">
             <template scope="scope">
-              <el-button type="text" @click="collection(scope.row)">收藏</el-button>
+              <el-button type="text" @click="handleCollection({name:scope.row.filename, url:'http://music.baidu.com/song/' + scope.row.hash,artist:scope.row.singername})">收藏</el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-col>
     </el-row>
+    <el-dialog
+      title="请选择歌单"
+      :visible.sync="dialogVisible"
+      size="tiny"
+      :before-close="handleClose">
+      <el-select v-model="value" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.my_list_id"
+          :label="item.my_list_name"
+          :value="item.my_list_id">
+        </el-option>
+      </el-select>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submit">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script type="text/babel">
-  import {mapMutations} from 'vuex'
+  import { mapMutations, mapState } from 'vuex'
   export default {
     data () {
       return {
@@ -188,10 +206,24 @@
         label: '音乐',
         // songs artists albums
         filterCurrent: 'songs',
-        searchFieldsHeight: 400
+        searchFieldsHeight: 400,
+        dialogVisible: false,
+        value: '',
+        sendData: {},
+        options: []
       }
     },
     mounted () {
+      if (this.$store.state.login) {
+        let that = this
+        let list = this.$store.state.mySongs
+        that.options = list.map(function (item) {
+          return {
+            my_list_id: item.my_list_id,
+            my_list_name: item.my_list_name
+          }
+        })
+      }
     },
     watch: {
       filterCurrent (val, oldVal) {
@@ -202,7 +234,22 @@
         } else {
           this.label = '专辑'
         }
+      },
+      my_list () {
+        let that = this
+        let list = this.$store.state.mySongs
+        that.options = list.map(function (item) {
+          return {
+            my_list_id: item.my_list_id,
+            my_list_name: item.my_list_name
+          }
+        })
       }
+    },
+    computed: {
+      ...mapState({
+        my_list: 'mySongs'
+      })
     },
     methods: {
       ...mapMutations({
@@ -249,6 +296,36 @@
             }
           })
         }
+      },
+      handleCollection (row) {
+        if (this.$store.state.login) {
+          this.dialogVisible = true
+          // 收藏操作
+          this.sendData.upload_music_name = row.name
+          this.sendData.upload_user_name = row.artist
+          this.sendData.upload_music_file_url = row.url
+          this.sendData.from_self = '0'
+          this.sendData.user_name = this.$store.state.userData.user_name
+        } else {
+          this.$message.error('请登录')
+        }
+      },
+      submit () {
+        let that = this
+        if (this.value !== '') {
+          this.sendData.my_list_id = this.value
+          // 收藏操作
+          this.collection({
+            message: that.$message,
+            data: this.sendData
+          })
+          this.dialogVisible = false
+        } else {
+          this.$message.error('请选择歌单!')
+        }
+      },
+      handleClose () {
+        this.dialogVisible = false
       }
     }
   }

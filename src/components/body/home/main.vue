@@ -32,8 +32,8 @@ create by YOU
         <router-view></router-view>
       </div>
     </div>
-    <div v-else>
-      你需要登录
+    <div class="not-login" v-else>
+      登录后查看更多内容
     </div>
   </div>
 </template>
@@ -75,6 +75,8 @@ create by YOU
     list-style: none
 
   .home
+    position: relative
+    height: 100%
     .header
       box-sizing: border-box
       display: flex
@@ -133,4 +135,14 @@ create by YOU
               color: #55a532
       .home-content-wrapper
         padding: 50px 20px
+    .not-login
+      height: 30px
+      width: 150px
+      text-align: center
+      position: absolute
+      left: 50%
+      top: 100px
+      transform: translate(-50%,-50%)
+      border-bottom: solid 3px #55a532
+      font-size: 16px
 </style>

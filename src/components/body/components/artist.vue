@@ -61,18 +61,36 @@
               label="操作"
               width="100">
               <template scope="scope">
-                <el-button type="text" @click="collection(scope.row)">收藏</el-button>
+                <el-button type="text" @click="handleCollection(scope.row)">收藏</el-button>
               </template>
             </el-table-column>
           </el-table>
         </div>
       </div>
     </div>
+    <el-dialog
+      title="请选择歌单"
+      :visible.sync="dialogVisible"
+      size="tiny"
+      :before-close="handleClose">
+      <el-select v-model="value" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.my_list_id"
+          :label="item.my_list_name"
+          :value="item.my_list_id">
+        </el-option>
+      </el-select>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submit">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script type="text/babel">
-  import {mapGetters, mapMutations} from 'vuex'
+  import {mapGetters, mapMutations, mapState} from 'vuex'
   export default {
     data () {
       return {
@@ -81,7 +99,11 @@
         filterArtists: [],
         loading: false,
         song: Math.floor(Math.random() * 100 + 200),
-        album: Math.floor(Math.random() * 30 + 20)
+        album: Math.floor(Math.random() * 30 + 20),
+        dialogVisible: false,
+        value: '',
+        sendData: {},
+        options: []
       }
     },
     mounted () {
@@ -105,6 +127,16 @@
           })
         }
       })
+      if (this.$store.state.login) {
+        let that = this
+        let list = this.$store.state.mySongs
+        that.options = list.map(function (item) {
+          return {
+            my_list_id: item.my_list_id,
+            my_list_name: item.my_list_name
+          }
+        })
+      }
     },
     watch: {
       search (val, oldVal) {
@@ -115,17 +147,63 @@
             return item
           }
         })
+      },
+      my_list () {
+        let that = this
+        let list = this.$store.state.mySongs
+        that.options = list.map(function (item) {
+          return {
+            my_list_id: item.my_list_id,
+            my_list_name: item.my_list_name
+          }
+        })
       }
     },
     computed: {
       ...mapGetters({
         artists: 'getArtists'
+      }),
+      ...mapState({
+        my_list: 'mySongs'
       })
     },
     methods: {
       ...mapMutations({
         collection: 'collectionOutside'
-      })
+      }),
+      ...mapMutations({
+        collection: 'collectionOutside'
+      }),
+      handleCollection (row) {
+        if (this.$store.state.login) {
+          this.dialogVisible = true
+          // 收藏操作
+          this.sendData.upload_music_name = row.music_name
+          this.sendData.upload_user_name = row.music_artist
+          this.sendData.upload_music_file_url = row.music_url
+          this.sendData.from_self = '0'
+          this.sendData.user_name = this.$store.state.userData.user_name
+        } else {
+          this.$message.error('请登录')
+        }
+      },
+      submit () {
+        let that = this
+        if (this.value !== '') {
+          this.sendData.my_list_id = this.value
+          // 收藏操作(待完成)
+          this.collection({
+            message: that.$message,
+            data: this.sendData
+          })
+          this.dialogVisible = false
+        } else {
+          this.$message.error('请选择歌单!')
+        }
+      },
+      handleClose () {
+        this.dialogVisible = false
+      }
     }
   }
 </script>

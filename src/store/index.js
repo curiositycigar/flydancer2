@@ -4,7 +4,6 @@
 import Vue from 'vue'
 import VueX from 'vuex'
 import Axios from 'axios'
-import $ from 'jquery'
 
 Vue.use(VueX)
 
@@ -53,28 +52,29 @@ let store = new VueX.Store({
     },
     // 新建歌单
     addMySongs (state, data) {
+      store.commit('LOGIN', {
+        username: state.userData.user_name,
+        password: state.userData.user_password
+      })
     },
     // 删除歌单
     deleteMySongs (state, data) {
-      state.mySongs = [
-        {
-          name: '搞笑的',
-          count: 100,
-          open: true,
-          author: 'LitCigar',
-          love: 10,
-          songs: []
-        }
-      ]
     },
     // 编辑歌单(待开发)
     editMySongs (state, data) {
     },
     // toggle歌单公开属性
-    toggleMysongs (state, data) {
+    toggleMySongs (state, data) {
     },
     // 删除歌单中收藏的歌曲
     deleteListItem (state, data) {
+      state.mySongs[data.i].music = state.mySongs[data.i].music.filter(function (item, index) {
+        if (index === data.j) {
+          return false
+        }
+        return true
+      })
+      state.mySongs = Object.assign([], state.mySongs)
     },
     // 关注
     doFollow (state, data) {
@@ -93,48 +93,60 @@ let store = new VueX.Store({
     // }
     // 收藏外部音乐
     collectionOutside (state, data) {
+      console.log(data.data)
+      Axios({
+        method: 'post',
+        url: 'http://222.24.63.118/post/create/notmyself/collection',
+        params: data.data
+      }).then(function (res) {
+        console.log(res)
+        data.message('收藏成功')
+        store.commit('LOGIN', {
+          username: state.userData.user_name,
+          password: state.userData.user_password
+        })
+      }).catch(function (err) {
+        console.log(err)
+        data.message('收藏失败')
+      })
     },
     // 收藏内部音乐
     collectionInside (state, data) {
     },
     // 上传
     uploadSong (state, data) {
-      $.ajax({
-        type: 'POST',
-        url: '',
-        data: data.data,
-        processData: false,
-        contentType: 'multipart/form-data',
-        success: function (res) {
-          console.log(res)
-        }
+      store.commit('LOGIN', {
+        username: state.userData.user_name,
+        password: state.userData.user_password
       })
-      // let formData = new FormData()
-      // formData.append('upload_user_name', state.userData.user_name)
-      // formData.append('upload_music_name', data.data.upload_music_name)
-      // formData.append('upload_music_file_url', data.data.upload_music_file_url)
-      // Axios({
-      //   method: 'post',
-      //   url: 'http://222.24.63.118/post/upload',
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data'
-      //   },
-      //   params: formData
-      // }).then(function (res) {
-      //   console.log(res)
-      //   state.upload.push({
-      //     upload_id: '1',
-      //     upload_user_name: state.userData.user_name,
-      //     upload_music_name: data.data.upload_music_name,
-      //     upload_open: '1',
-      //     upload_date: '2017-05-09 11:20:27.503527',
-      //     upload_music_file_url: 'http://222.24.63.118:8080/upload/upload/jianshu',
-      //     from_self: '1'
-      //   })
-      //   data.message('提交成功')
-      // }).catch(function () {
-      //   data.message.error('提交失败')
-      // })
+    },
+    deleteUploadSong (state, data) {
+      state.upload = state.upload.filter(function (item) {
+        if (item.upload_id === data.upload_id) {
+          return false
+        }
+        return true
+      })
+    },
+    REGISTER (state, data) {
+      Axios({
+        method: 'post',
+        url: 'http://222.24.63.118/post/createuser',
+        params: {
+          user_name: data.username,
+          user_password: data.password
+        }
+      }).then(function (res) {
+        console.log(res)
+        data.message('注册成功')
+        store.commit('LOGIN', {
+          username: data.username,
+          password: data.password
+        })
+      }).catch(function (err) {
+        data.message('注册失败')
+        console.log(err)
+      })
     },
     // 登录
     LOGIN (state, data) {
@@ -147,6 +159,7 @@ let store = new VueX.Store({
         }
       }).then(function (res) {
         if (res.status === 200) {
+          console.log('login', res.data)
           state.userData = res.data.user_info[0]
           state.mySongs = res.data.my_music_list
           state.collection = res.data.collection
@@ -154,9 +167,11 @@ let store = new VueX.Store({
           state.fans = res.data.fans
           state.upload = res.data.upload_info
           state.login = true
+          data.message('登录成功')
         }
       }).catch(function (err) {
         console.log(err)
+        data.message.error('登录失败,用户名或密码错误')
       })
     },
     // 登出

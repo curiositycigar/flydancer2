@@ -17,7 +17,10 @@ import HomeUpload from '../components/body/home/pages/upload.vue'
 import HomeLove from '../components/body/home/pages/love.vue'
 import HomeMe from '../components/body/home/pages/me.vue'
 import HomePassword from '../components/body/home/pages/password.vue'
+
 import Community from '../components/body/community/main.vue'
+import CommunityUser from '../components/body/community/user.vue'
+import CommunityHome from '../components/body/community/home.vue'
 
 import User from '../components/body/components/user.vue'
 import Song from '../components/body/components/song.vue'
@@ -141,8 +144,25 @@ const router = new Router({
     },
     {
       path: '/community',
-      name: 'community',
-      component: Community
+      component: Community,
+      children: [
+        {
+          path: '',
+          beforeEnter (to, from, next) {
+            return next('/community/home')
+          }
+        },
+        {
+          path: 'home',
+          name: 'com-home',
+          component: CommunityHome
+        },
+        {
+          path: 'user/:id',
+          name: 'com-user',
+          component: CommunityUser
+        }
+      ]
     }
   ],
   scrollBehavior (to, from, savedPosition) {

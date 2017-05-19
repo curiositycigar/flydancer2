@@ -41,6 +41,7 @@
   #app
     min-width: 1200px
     height: 100%
+    min-height: 500px
 
   .stick-footer-wrapper
     box-sizing: border-box

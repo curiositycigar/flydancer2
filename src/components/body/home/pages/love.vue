@@ -72,7 +72,7 @@
         <el-table-column
           label="操作">
           <template scope="scope">
-            <el-button type="text">查看</el-button>
+            <a :href="scope.row.upload_music_file_url" target="_blank">查看</a>
             <!-- 站内音乐才可以播放和下载 -->
             <el-button v-if="false" type="text">播放</el-button>
             <el-button v-if="false" type="text">下载</el-button>
@@ -108,22 +108,45 @@
         'collection'
       ])
     },
+    watch: {
+      collection () {
+        this.loveData = this.$_.cloneDeep(this.collection)
+      }
+    },
     methods: {
       openLookWindow (row) {
         // 刷新数据
         this.lookIndex = this.loveData.indexOf(row)
         this.lookDialog = true
       },
+      handleLook () {
+        this.lookDialog = false
+      },
       openDeleteWindow (row) {
         // 删除并关闭dialog
         this.deleteIndex = this.loveData.indexOf(row)
         this.deleteDialog = true
       },
-      handleLook () {
-        this.lookDialog = false
-      },
       handleDelete () {
-        // this.$store.commit('deleteMySongs', this.deleteIndex)
+        let that = this
+        this.$http({
+          method: 'post',
+          url: 'http://222.24.63.118/post/delete/collection',
+          params: {
+            my_list_id: that.loveData[that.deleteIndex].my_list_id,
+            user_name: that.$store.state.userData.user_name
+          }
+        }).then(function (res) {
+          that.$message('删除成功')
+          that.$store.commit('LOGIN', {
+            username: that.$store.state.userData.user_name,
+            password: that.$store.state.userData.user_password
+          })
+          console.log(res)
+        }).catch(function (err) {
+          that.$message.error('删除失败')
+          console.log(err)
+        })
         this.deleteIndex = -1
         this.deleteDialog = false
       },

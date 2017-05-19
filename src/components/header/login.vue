@@ -28,16 +28,16 @@ create by YOU
         <div class="register-fields" v-show="!loginFields">
           <el-form ref="login" label-position="left" :model="login" label-width="80px">
             <el-form-item label="用户名:">
-              <el-input v-model="login.username"></el-input>
+              <el-input v-model="register.username"></el-input>
             </el-form-item>
             <el-form-item label="密码:">
-              <el-input v-model="login.password1"></el-input>
+              <el-input v-model="register.password"></el-input>
             </el-form-item>
             <el-form-item label="确认密码:">
-              <el-input v-model="login.password2"></el-input>
+              <el-input v-model="register.password1"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmitLogin">注册</el-button>
+              <el-button type="primary" @click="onSubmitRegister">注册</el-button>
               <el-button @click="toggleLogin">取消</el-button>
             </el-form-item>
           </el-form>
@@ -59,6 +59,11 @@ create by YOU
         login: {
           username: '18829291269',
           password: 'feilei123'
+        },
+        register: {
+          username: '',
+          password: '',
+          password1: ''
         }
       }
     },
@@ -73,9 +78,38 @@ create by YOU
         this.loginFields = false
       },
       onSubmitLogin () {
-        this.$store.commit('LOGIN', this.login)
+        let that = this
+        this.$store.commit('LOGIN', {
+          ...this.login,
+          message: that.$message
+        })
       },
       onSubmitRegister () {
+        let that = this
+        let right = true
+        let message = ''
+        if (!/^[a-zA-Z][a-z0-9A-Z_]{5,14}/.test(this.register.username)) {
+          message += '用户名为字母开头，6-15位数字字母下划线组合 '
+          right = false
+        }
+        if (!/^[a-z0-9A-Z_]{6,15}/.test(this.register.password)) {
+          message += '密码为6-15位数字字母下划线组合 '
+          right = false
+        }
+        if (this.register.password !== this.register.password1) {
+          message += '两次输入密码必须相同'
+          right = false
+        }
+        if (!right) {
+          this.$message.error(message)
+        } else {
+          this.$store.commit('REGISTER', {
+            message: that.$message,
+            username: that.register.username,
+            password: that.register.password
+          })
+          this.$message.error('正确')
+        }
       }
     }
   }

@@ -6,7 +6,9 @@
           <el-upload
             class="avatar-uploader"
             action=""
+            :file-list="fileList"
             :show-file-list="false"
+            :on-change="handleChange"
             :before-upload="beforeAvatarUpload">
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -20,7 +22,7 @@
       </el-form-item>
       <el-form-item label="生日">
         <el-col :span="20">
-          <el-date-picker type="date" placeholder="选择日期" v-model="birth"
+          <el-date-picker type="date" placeholder="选择日期" v-model="form.user_birth"
                           style="width: 100%;"></el-date-picker>
         </el-col>
       </el-form-item>
@@ -52,12 +54,14 @@
   </div>
 </template>
 <script type="text/babel">
+  import ajax from './components/ajax'
   import {mapState} from 'vuex'
   export default {
     data () {
       return {
         form: {},
         imageUrl: null,
+        fileList: [],
         birth: '1994-11-24'
       }
     },
@@ -70,12 +74,44 @@
     },
     methods: {
       onSubmit () {
-        this.$store.commit('updateUserData', this.form)
+        let that = this
+        let data = this.$_.cloneDeep(that.form)
+        data.user_list_open = data.user_list_open ? '1' : '0'
+        delete data.user_avatar
+        console.log(data)
+        let config = {
+          data: data,
+          action: 'http://222.24.63.118/post/modifyuser',
+          onProgress: e => {
+            console.log(e)
+          },
+          onSuccess: res => {
+            console.log(res)
+            this.$message('修改成功')
+            that.$store.commit('LOGIN', {
+              username: that.$store.state.userData.user_name,
+              password: that.$store.state.userData.user_password
+            })
+            this.uploadWindowVisible = false
+          },
+          onError: err => {
+            console.log('Error', err)
+          }
+        }
+        if (this.fileList[0]) {
+          config.file = this.fileList[0].raw
+          config.filename = 'user_avatar'
+        }
+
+        ajax(config)
         console.log('submit!')
       },
       onReset () {
         this.form = this.$_.cloneDeep(this.userData)
         this.form.user_list_open = !!parseInt(this.form.user_list_open)
+      },
+      handleChange (file) {
+        this.fileList = [file]
       },
       beforeAvatarUpload (file) {
         let that = this

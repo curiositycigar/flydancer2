@@ -34,7 +34,7 @@ create by YOU
     <div v-else class="header-username">
       欢迎您!
       <router-link to="">
-        {{ userData.user_nick_name }}
+        {{ userData.user_nick_name ? userData.user_nick_name : userData.user_name }}
       </router-link>
       <el-button type="text" style="font-size: 16px;color: #cccccc;" @click="LOGOUT">退出</el-button>
     </div>

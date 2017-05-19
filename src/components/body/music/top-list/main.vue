@@ -38,7 +38,7 @@
                 </el-table-column>
                 <el-table-column label="操作" width="70">
                   <template scope="scope">
-                    <el-button type="text" @click="collection(scope.row)">收藏</el-button>
+                    <el-button type="text" @click="handleCollection(scope.row)">收藏</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -47,11 +47,29 @@
         </el-row>
       </div>
     </div>
+    <el-dialog
+      title="请选择歌单"
+      :visible.sync="dialogVisible"
+      size="tiny"
+      :before-close="handleClose">
+      <el-select v-model="value" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.my_list_id"
+          :label="item.my_list_name"
+          :value="item.my_list_id">
+        </el-option>
+      </el-select>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submit">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script type="text/babel">
-  import {mapMutations} from 'vuex'
+  import {mapMutations, mapState} from 'vuex'
   import api from './api'
   export default {
     components: {},
@@ -59,7 +77,11 @@
       let data = []
       Object.assign(data, api)
       return {
-        lists: data
+        lists: data,
+        dialogVisible: false,
+        value: '',
+        sendData: {},
+        options: []
       }
     },
     created () {
@@ -78,7 +100,34 @@
           })
         })
       })
+      if (this.$store.state.login) {
+        let that = this
+        let list = this.$store.state.mySongs
+        that.options = list.map(function (item) {
+          return {
+            my_list_id: item.my_list_id,
+            my_list_name: item.my_list_name
+          }
+        })
+      }
       this.lists = data
+    },
+    computed: {
+      ...mapState({
+        my_list: 'mySongs'
+      })
+    },
+    watch: {
+      my_list () {
+        let that = this
+        let list = this.$store.state.mySongs
+        that.options = list.map(function (item) {
+          return {
+            my_list_id: item.my_list_id,
+            my_list_name: item.my_list_name
+          }
+        })
+      }
     },
     methods: {
       handlerChange (query) {
@@ -86,7 +135,36 @@
       },
       ...mapMutations({
         collection: 'collectionOutside'
-      })
+      }),
+      handleCollection (row) {
+        if (this.$store.state.login) {
+          this.dialogVisible = true
+          // 收藏操作
+          this.sendData.upload_music_name = row.music_name
+          this.sendData.upload_user_name = row.music_artist ? row.music_artist : '未知'
+          this.sendData.upload_music_file_url = row.music_url
+          this.sendData.from_self = '0'
+          this.sendData.user_name = this.$store.state.userData.user_name
+        } else {
+          this.$message.error('请登录')
+        }
+      },
+      submit () {
+        let that = this
+        if (this.value !== '') {
+          this.sendData.my_list_id = this.value
+          this.collection({
+            message: that.$message,
+            data: this.sendData
+          })
+          this.dialogVisible = false
+        } else {
+          this.$message.error('请选择歌单!')
+        }
+      },
+      handleClose () {
+        this.dialogVisible = false
+      }
     }
   }
 </script>
@@ -112,5 +190,9 @@
             padding-top: 20px
             font-size: 14px
             border-bottom: solid 1px #cccccc
+    .el-dialog
+      .el-dialog__body
+        display: flex
+        justify-content: center
 
 </style>
